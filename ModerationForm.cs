@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -16,24 +15,34 @@ namespace ZerosTwitterClient
             InitializeComponent();
         }
 
-        private DisplayForm display;
+        private DisplayForm _display;
 
         private void ModerationForm_Load(object sender, EventArgs e)
         {
-            display = new DisplayForm();
-            display.Show();
+            _display = new DisplayForm();
+            _display.Show();
         }
 
         private void displayFullscreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (display.FormBorderStyle == System.Windows.Forms.FormBorderStyle.None) 
+            if (_display.isRunning)
             {
-                display.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+                _display.destroyFeed();
+                displayFullscreenToolStripMenuItem.Checked = false;
             }
             else
             {
-                display.WindowState = FormWindowState.Maximized;
-                display.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+                _display.setupFeed();
+
+                displayFullscreenToolStripMenuItem.Checked = true;
+            }
+        }
+
+        private void getMoreTweetsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (var t in TwitterGrabber.getTweets())
+            {
+                TweetDisplay td = new TweetDisplay(t);
             }
         }
     }
