@@ -50,6 +50,7 @@
             // pictureBox1
             // 
             this.pictureBox1.ImageLocation = "http://a0.twimg.com/profile_images/1168462701/Square_UNIONLOGO_normal.jpg";
+            this.pictureBox1.InitialImage = global::ZerosTwitterClient.Properties.Resources.dots32;
             this.pictureBox1.Location = new System.Drawing.Point(3, 3);
             this.pictureBox1.Name = "pictureBox1";
             this.tableLayoutPanel1.SetRowSpan(this.pictureBox1, 2);

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Xml;
 using System.Xml.XPath;
 
 namespace ZerosTwitterClient
@@ -12,7 +13,7 @@ namespace ZerosTwitterClient
     {
         private static readonly object _twitterLock = new object();
 
-        private static ulong _id = 0;
+        private static ulong _id;
 
         public static LinkedList<Tweet> getTweets(string search = "#hwunion")
         {
@@ -27,7 +28,7 @@ namespace ZerosTwitterClient
                                                       );
 
                 webRequest.UserAgent = "HwunionTwitterClient/1.0 (+ simon@stwalkerster.net )";
-
+                webRequest.Timeout = 5000;
                 var response = (HttpWebResponse) webRequest.GetResponse();
 
                 if (response.StatusCode != HttpStatusCode.OK)
@@ -42,25 +43,46 @@ namespace ZerosTwitterClient
 
                 var xpd = new XPathDocument(responseStream);
                 var xpn = xpd.CreateNavigator();
-                var xpni = xpn.Select("//entry");
+                var xnm = new XmlNamespaceManager(xpn.NameTable);
+                xnm.AddNamespace("atom", "http://www.w3.org/2005/Atom");
+                var xpath = XPathExpression.Compile("//atom:entry", xnm);
+                var xpni = xpn.Select(xpath);
 
 
                 while (xpni.MoveNext())
                 {
                     var t = new Tweet();
 
-                    Debug.Assert(xpni.Current != null, "xpni.Current != null");
 
-                    string idbase;
-                    t.Content = (string) xpni.Current.Evaluate(XPathExpression.Compile("/title/text()"), xpni);
-                    t.Author = (string) xpni.Current.Evaluate(XPathExpression.Compile("/author/name/text()"), xpni);
-                    t.Id = ((idbase = ((string) xpni.Current.Evaluate(XPathExpression.Compile("/id/text()"), xpni))) !=
-                            null)
-                               ? ulong.Parse(idbase.Split(':')[2])
-                               : 0;
-                    t.Image = (string) xpni.Current.Evaluate(XPathExpression.Compile("/link/attribute::href"), xpni);
+                    var xtr = new XmlTextReader(new MemoryStream(Encoding.UTF8.GetBytes(xpni.Current.OuterXml)));
 
-                    if (_id < t.Id) _id = t.Id;
+                    while (xtr.Read())
+                    {
+                        if (xtr.NodeType != XmlNodeType.Element) continue;
+
+                        switch (xtr.Name)
+                        {
+                            case "id":
+                                string idbase = xtr.ReadElementContentAsString();
+                                t.Id = (idbase != null) ? ulong.Parse(idbase.Split(':')[2]) : 0;
+                                break;
+                            case "title":
+                                t.Content = xtr.ReadElementContentAsString();
+                                break;
+                            case "link":
+                                t.Image = xtr.GetAttribute("href");
+                                break;
+                            case "name":
+                                t.Author = xtr.ReadElementContentAsString();
+                                break;
+                        }
+                    }
+
+
+                    if (_id < t.Id)
+                    {
+                        _id = t.Id;
+                    }
 
                     tweets.AddLast(t);
                 }

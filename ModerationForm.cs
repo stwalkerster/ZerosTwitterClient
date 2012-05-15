@@ -40,9 +40,29 @@ namespace ZerosTwitterClient
 
         private void getMoreTweetsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (var t in TwitterGrabber.getTweets())
+            LinkedList<Tweet> newTweets;
+            try
             {
-                TweetDisplay td = new TweetDisplay(t);
+                newTweets = TwitterGrabber.getTweets();
+                foreach (var t in newTweets)
+                {
+                    var td = new ModTweet(t);
+                    flowLayoutPanel1.Controls.Add(td);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+
+        }
+
+        private void flowLayoutPanel1_SizeChanged(object sender, EventArgs e)
+        {
+            foreach (Control control in flowLayoutPanel1.Controls)
+            {
+                control.Width = flowLayoutPanel1.Width - 6;
             }
         }
     }

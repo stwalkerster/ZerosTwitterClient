@@ -59,5 +59,12 @@ namespace ZerosTwitterClient.Properties {
                 resourceCulture = value;
             }
         }
+        
+        internal static System.Drawing.Bitmap dots32 {
+            get {
+                object obj = ResourceManager.GetObject("dots32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
