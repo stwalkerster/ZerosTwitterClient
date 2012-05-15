@@ -13,5 +13,7 @@ namespace ZerosTwitterClient
         public ulong Id { get; set; }
 
         public string Image { get; set; }
+
+        public string Timestamp { get; set; }
     }
 }

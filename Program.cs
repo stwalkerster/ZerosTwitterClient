@@ -5,6 +5,8 @@ namespace ZerosTwitterClient
 {
     static class Program
     {
+        public static ModerationForm ModerationForm;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -13,7 +15,8 @@ namespace ZerosTwitterClient
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ModerationForm());
+            ModerationForm = new ModerationForm();
+            Application.Run(ModerationForm);
         }
     }
 }

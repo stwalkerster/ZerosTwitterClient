@@ -9,17 +9,17 @@ using System.Windows.Forms;
 
 namespace ZerosTwitterClient
 {
-    public partial class ModTweet : UserControl
+    public partial class DisplayedTweet : UserControl
     {
         private readonly Tweet _t;
 
-        public ModTweet()
+        public DisplayedTweet()
         {
             InitializeComponent();
         }
 
 
-        public ModTweet(Tweet t)
+        public DisplayedTweet(Tweet t)
         {
             _t = t;
             InitializeComponent();
@@ -33,7 +33,7 @@ namespace ZerosTwitterClient
         }
 
 
-        private void ModTweet_Load(object sender, EventArgs e)
+        private void DisplayedTweet_Load(object sender, EventArgs e)
         {
 
             Width = Parent.Width - 26;
@@ -51,9 +51,8 @@ namespace ZerosTwitterClient
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Parent.Controls.Remove(this);
             Program.ModerationForm.Display.addTweet(new TweetDisplay(_t));
-            Program.ModerationForm.flowLayoutPanel2.Controls.Add(new DisplayedTweet(_t));
+            Program.ModerationForm.flowLayoutPanel2.Controls.SetChildIndex(this,0);
         }
     }
 }

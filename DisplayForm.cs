@@ -47,12 +47,13 @@ namespace ZerosTwitterClient
 
         public void addTweet(TweetDisplay t)
         {
-            flp.Controls.Add(t);
+            if (flp != null)
+            {
+                flp.Controls.Add(t);
 
-            t.BackColor = Color.Red;
-
-            // move it to the top
-            flp.Controls.SetChildIndex(t,0);
+                // move it to the top
+                flp.Controls.SetChildIndex(t, 0);
+            }
 
         }
     }

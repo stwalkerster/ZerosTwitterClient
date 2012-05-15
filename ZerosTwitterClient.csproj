@@ -44,12 +44,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DisplayedTweet.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DisplayedTweet.Designer.cs">
+      <DependentUpon>DisplayedTweet.cs</DependentUpon>
+    </Compile>
     <Compile Include="DisplayForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DisplayForm.Designer.cs">
       <DependentUpon>DisplayForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImageCache.cs" />
     <Compile Include="ModerationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +79,9 @@
       <DependentUpon>TweetDisplay.cs</DependentUpon>
     </Compile>
     <Compile Include="TwitterGrabber.cs" />
+    <EmbeddedResource Include="DisplayedTweet.resx">
+      <DependentUpon>DisplayedTweet.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DisplayForm.resx">
       <DependentUpon>DisplayForm.cs</DependentUpon>
     </EmbeddedResource>

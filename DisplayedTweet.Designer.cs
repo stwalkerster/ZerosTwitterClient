@@ -1,6 +1,6 @@
 ﻿namespace ZerosTwitterClient
 {
-    partial class ModTweet
+    partial class DisplayedTweet
     {
         /// <summary> 
         /// Required designer variable.
@@ -79,7 +79,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 3;
-            this.button1.Text = "Approve";
+            this.button1.Text = "Re-Show";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -91,8 +91,9 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 4;
-            this.button2.Text = "Discard";
+            this.button2.Text = "Delete";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Visible = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label3
@@ -116,7 +117,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Name = "ModTweet";
             this.Size = new System.Drawing.Size(605, 75);
-            this.Load += new System.EventHandler(this.ModTweet_Load);
+            this.Load += new System.EventHandler(this.DisplayedTweet_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 

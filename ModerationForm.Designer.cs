@@ -166,11 +166,13 @@
             // 
             // textBox1
             // 
+            this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::ZerosTwitterClient.Properties.Settings.Default, "TwitterSearchTerm", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBox1.Location = new System.Drawing.Point(95, 3);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(448, 20);
             this.textBox1.TabIndex = 1;
+            this.textBox1.Text = global::ZerosTwitterClient.Properties.Settings.Default.TwitterSearchTerm;
             // 
             // label2
             // 
@@ -186,10 +188,27 @@
             // 
             // numericUpDown1
             // 
+            this.numericUpDown1.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::ZerosTwitterClient.Properties.Settings.Default, "TwitterUpdateInterval", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.numericUpDown1.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             this.numericUpDown1.Location = new System.Drawing.Point(95, 29);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            900,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown1.TabIndex = 3;
+            this.numericUpDown1.Value = global::ZerosTwitterClient.Properties.Settings.Default.TwitterUpdateInterval;
             // 
             // groupBox2
             // 
@@ -201,10 +220,11 @@
             this.groupBox2.Size = new System.Drawing.Size(561, 722);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "groupBox2";
+            this.groupBox2.Text = "Moderation Queue";
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 16);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -221,15 +241,17 @@
             this.groupBox3.Size = new System.Drawing.Size(561, 626);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "groupBox3";
+            this.groupBox3.Text = "Display List";
             // 
             // flowLayoutPanel2
             // 
+            this.flowLayoutPanel2.AutoScroll = true;
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 16);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(555, 607);
             this.flowLayoutPanel2.TabIndex = 0;
+            this.flowLayoutPanel2.SizeChanged += new System.EventHandler(this.flowLayoutPanel2_SizeChanged);
             // 
             // ModerationForm
             // 
@@ -276,6 +298,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+        public System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
     }
 }

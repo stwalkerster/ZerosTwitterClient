@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -63,7 +62,7 @@ namespace ZerosTwitterClient
                         switch (xtr.Name)
                         {
                             case "id":
-                                string idbase = xtr.ReadElementContentAsString();
+                                var idbase = xtr.ReadElementContentAsString();
                                 t.Id = (idbase != null) ? ulong.Parse(idbase.Split(':')[2]) : 0;
                                 break;
                             case "title":
@@ -74,6 +73,9 @@ namespace ZerosTwitterClient
                                 break;
                             case "name":
                                 t.Author = xtr.ReadElementContentAsString();
+                                break;
+                            case "published":
+                                t.Timestamp = xtr.ReadElementContentAsString();
                                 break;
                         }
                     }
@@ -89,5 +91,6 @@ namespace ZerosTwitterClient
             }
             return tweets;
         }
+
     }
 }
