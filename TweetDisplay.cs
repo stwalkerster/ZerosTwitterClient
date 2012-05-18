@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Net;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace ZerosTwitterClient
 {
     public partial class TweetDisplay : UserControl
     {
-        private readonly Tweet _t;
+        public readonly Tweet _t;
 
         public TweetDisplay()
         {

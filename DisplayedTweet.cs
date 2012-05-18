@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Net;
-using System.Text;
 using System.Windows.Forms;
 
 namespace ZerosTwitterClient
@@ -47,6 +41,24 @@ namespace ZerosTwitterClient
         private void button2_Click(object sender, EventArgs e)
         {
             Parent.Controls.Remove(this);
+
+            bool changed;
+            do
+            {
+                changed = false;
+                foreach (var control in Program.ModerationForm.Display.flp.Controls)
+                {
+                    var x = (TweetDisplay) control;
+                    
+                    if (x._t == null) continue;
+                    
+                    if (x._t.Id != _t.Id) continue;
+
+                    Program.ModerationForm.Display.flp.Controls.Remove(x);
+                    changed = true;
+                }
+            } while (changed);
+
         }
 
         private void button1_Click(object sender, EventArgs e)

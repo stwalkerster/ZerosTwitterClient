@@ -86,14 +86,12 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Enabled = false;
             this.button2.Location = new System.Drawing.Point(526, 28);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 4;
             this.button2.Text = "Delete";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Visible = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label3
@@ -104,7 +102,7 @@
             this.label3.Size = new System.Drawing.Size(120, 15);
             this.label3.TabIndex = 5;
             // 
-            // ModTweet
+            // DisplayedTweet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -115,7 +113,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.pictureBox1);
-            this.Name = "ModTweet";
+            this.Name = "DisplayedTweet";
             this.Size = new System.Drawing.Size(605, 75);
             this.Load += new System.EventHandler(this.DisplayedTweet_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

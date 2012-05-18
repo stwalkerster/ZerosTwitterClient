@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.systemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.displayFullscreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,6 +46,8 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -61,7 +64,7 @@
             this.getMoreTweetsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1134, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(787, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -114,7 +117,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1134, 728);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(787, 266);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // groupBox1
@@ -124,9 +127,9 @@
             this.groupBox1.AutoSize = true;
             this.groupBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.groupBox1.Controls.Add(this.tableLayoutPanel2);
-            this.groupBox1.Location = new System.Drawing.Point(570, 3);
+            this.groupBox1.Location = new System.Drawing.Point(396, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(561, 90);
+            this.groupBox1.Size = new System.Drawing.Size(388, 110);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
@@ -144,12 +147,14 @@
             this.tableLayoutPanel2.Controls.Add(this.textBox1, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.label2, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.numericUpDown1, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.checkBox1, 1, 2);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(6, 19);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowCount = 3;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(546, 52);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(373, 72);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // label1
@@ -159,7 +164,7 @@
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Margin = new System.Windows.Forms.Padding(3, 0, 10, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(79, 26);
+            this.label1.Size = new System.Drawing.Size(128, 26);
             this.label1.TabIndex = 0;
             this.label1.Text = "Search term";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -168,9 +173,9 @@
             // 
             this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::ZerosTwitterClient.Properties.Settings.Default, "TwitterSearchTerm", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(95, 3);
+            this.textBox1.Location = new System.Drawing.Point(144, 3);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(448, 20);
+            this.textBox1.Size = new System.Drawing.Size(226, 20);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = global::ZerosTwitterClient.Properties.Settings.Default.TwitterSearchTerm;
             // 
@@ -181,20 +186,19 @@
             this.label2.Location = new System.Drawing.Point(3, 26);
             this.label2.Margin = new System.Windows.Forms.Padding(3, 0, 10, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(79, 26);
+            this.label2.Size = new System.Drawing.Size(128, 26);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Update interval";
+            this.label2.Text = "Update interval (seconds)\r\n";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::ZerosTwitterClient.Properties.Settings.Default, "TwitterUpdateInterval", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.numericUpDown1.Increment = new decimal(new int[] {
             5,
             0,
             0,
             0});
-            this.numericUpDown1.Location = new System.Drawing.Point(95, 29);
+            this.numericUpDown1.Location = new System.Drawing.Point(144, 29);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             900,
             0,
@@ -208,7 +212,12 @@
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown1.TabIndex = 3;
-            this.numericUpDown1.Value = global::ZerosTwitterClient.Properties.Settings.Default.TwitterUpdateInterval;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // groupBox2
             // 
@@ -217,7 +226,7 @@
             this.groupBox2.Location = new System.Drawing.Point(3, 3);
             this.groupBox2.Name = "groupBox2";
             this.tableLayoutPanel1.SetRowSpan(this.groupBox2, 2);
-            this.groupBox2.Size = new System.Drawing.Size(561, 722);
+            this.groupBox2.Size = new System.Drawing.Size(387, 260);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Moderation Queue";
@@ -228,7 +237,7 @@
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 16);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(555, 703);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(381, 241);
             this.flowLayoutPanel1.TabIndex = 0;
             this.flowLayoutPanel1.SizeChanged += new System.EventHandler(this.flowLayoutPanel1_SizeChanged);
             // 
@@ -236,9 +245,9 @@
             // 
             this.groupBox3.Controls.Add(this.flowLayoutPanel2);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3.Location = new System.Drawing.Point(570, 99);
+            this.groupBox3.Location = new System.Drawing.Point(396, 119);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(561, 626);
+            this.groupBox3.Size = new System.Drawing.Size(388, 144);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Display List";
@@ -249,15 +258,31 @@
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 16);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(555, 607);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(382, 125);
             this.flowLayoutPanel2.TabIndex = 0;
             this.flowLayoutPanel2.SizeChanged += new System.EventHandler(this.flowLayoutPanel2_SizeChanged);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(144, 55);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(119, 14);
+            this.checkBox1.TabIndex = 5;
+            this.checkBox1.Text = "Enable auto-update\r\n";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 15000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // ModerationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1134, 752);
+            this.ClientSize = new System.Drawing.Size(787, 290);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -299,5 +324,7 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         public System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Timer timer1;
     }
 }

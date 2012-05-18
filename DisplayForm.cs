@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 namespace ZerosTwitterClient
@@ -18,7 +13,7 @@ namespace ZerosTwitterClient
 
         public bool isRunning { get; private set; }
 
-        private FlowLayoutPanel flp;
+        public FlowLayoutPanel flp;
 
         public void setupFeed()
         {
@@ -29,7 +24,7 @@ namespace ZerosTwitterClient
             Controls.Clear();
             SuspendLayout();
 
-            flp = new FlowLayoutPanel {Dock = DockStyle.Fill};
+            flp = new FlowLayoutPanel {Dock = DockStyle.Fill, BorderStyle = BorderStyle.FixedSingle, BackColor = Color.Black, ForeColor = Color.White , Padding = new Padding(10)};
 
             flp.Controls.Add(new TweetDisplay());
 

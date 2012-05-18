@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace ZerosTwitterClient
@@ -14,8 +11,8 @@ namespace ZerosTwitterClient
         {
             InitializeComponent();
             tweetGrabberThread = new BackgroundWorker();
-            tweetGrabberThread.DoWork+=new DoWorkEventHandler(addTweets);
-            tweetGrabberThread.RunWorkerCompleted += new RunWorkerCompletedEventHandler(tweetGrabberThread_RunWorkerCompleted   );
+            tweetGrabberThread.DoWork+=addTweets;
+            tweetGrabberThread.RunWorkerCompleted += tweetGrabberThread_RunWorkerCompleted;
         }
 
         void tweetGrabberThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -109,6 +106,24 @@ namespace ZerosTwitterClient
             {
                 control.Width = flowLayoutPanel2.Width - 26;
             }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            timer1.Enabled = checkBox1.Checked;
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            timer1.Interval = (int)(numericUpDown1.Value * 1000);
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (tweetGrabberThread.IsBusy) return;
+
+            tweetGrabberThread.RunWorkerAsync();
+            getMoreTweetsToolStripMenuItem.Enabled = false;
         }
     }
 }
