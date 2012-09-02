@@ -53,6 +53,7 @@ namespace ZerosTwitterClient
 
             tweetGrabberThread.RunWorkerAsync();
             getMoreTweetsToolStripMenuItem.Enabled = false;
+            toolStripStatusLabel1.Text = "Getting tweets...";
         }
 
         private void addTweets(object sender, DoWorkEventArgs args)
@@ -72,10 +73,12 @@ namespace ZerosTwitterClient
                     
                     addTweetToModPanelAsync(td);
                 }
+
+                toolStripStatusLabel1.Text = "Done. " + newTweets.Count + " tweets fetched.";
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                toolStripStatusLabel1.Text = (ex.Message);
             }
         }
 
@@ -124,6 +127,11 @@ namespace ZerosTwitterClient
 
             tweetGrabberThread.RunWorkerAsync();
             getMoreTweetsToolStripMenuItem.Enabled = false;
+        }
+
+        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
