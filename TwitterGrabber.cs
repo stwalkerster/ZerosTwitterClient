@@ -40,16 +40,13 @@ namespace ZerosTwitterClient
                 if ((responseStream = response.GetResponseStream()) == null)
                     throw new ArgumentException();
 
-            //    var basextr = new XmlTextReader(responseStream) {Namespaces = false};
 
-                Stream datas = new MemoryStream();
-                StreamWriter sw = new StreamWriter(datas);
                 string originaldata = new StreamReader(responseStream).ReadToEnd();
-                string newdata = originaldata.Replace("<georss:", "<");
-                sw.Write(newdata);
-                sw.Flush();
+                string newdata = originaldata
+                    .Replace("<georss:", "<")
+                    .Replace("</georss:", "</");
 
-                XmlTextReader xtextrdr = new XmlTextReader(newdata,XmlNodeType.Document,null);
+                Stream datas = new MemoryStream(Encoding.ASCII.GetBytes(newdata));
 
                 var xpd = new XPathDocument(datas);
                 
