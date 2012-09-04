@@ -26,7 +26,7 @@ namespace ZerosTwitterClient
 
             flp = new FlowLayoutPanel {Dock = DockStyle.Fill, BorderStyle = BorderStyle.FixedSingle, BackColor = Color.Black, ForeColor = Color.White , Padding = new Padding(10)};
 
-            flp.Controls.Add(new TweetDisplay());
+        //    flp.Controls.Add(new TweetDisplay());
 
             Controls.Add(flp);
             ResumeLayout(true);
