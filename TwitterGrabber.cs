@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Web;
 using System.Xml;
 using System.Xml.XPath;
 
@@ -75,7 +76,7 @@ namespace ZerosTwitterClient
                                 t.Id = (idbase != null) ? ulong.Parse(idbase.Split(':')[2]) : 0;
                                 break;
                             case "title":
-                                t.Content = xtr.ReadElementContentAsString();
+                                t.Content = HttpUtility.HtmlDecode(xtr.ReadElementContentAsString()).Replace("&", "&&");
                                 break;
                             case "link":
                                 t.Image = xtr.GetAttribute("href");
