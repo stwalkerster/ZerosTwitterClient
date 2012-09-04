@@ -47,7 +47,10 @@ namespace ZerosTwitterClient
         {
             Parent.Controls.Remove(this);
             Program.ModerationForm.Display.addTweet(new TweetDisplay(_t));
-            Program.ModerationForm.flowLayoutPanel2.Controls.Add(new DisplayedTweet(_t));
+            var displayedTweet = new DisplayedTweet(_t);
+            Program.ModerationForm.flowLayoutPanel2.Controls.Add(displayedTweet);
+            Program.ModerationForm.flowLayoutPanel2.Controls.SetChildIndex(displayedTweet, 0);
+                
         }
     }
 }
