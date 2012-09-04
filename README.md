@@ -10,7 +10,7 @@ Use is simple - drag the display form window to the screen you wish to project o
 Licence (MIT)
 =====
 
-Copyright (c) 2011 Simon Walker
+Copyright (c) 2012 Simon Walker
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
