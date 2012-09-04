@@ -132,7 +132,7 @@
             this.groupBox1.Controls.Add(this.tableLayoutPanel2);
             this.groupBox1.Location = new System.Drawing.Point(396, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(388, 110);
+            this.groupBox1.Size = new System.Drawing.Size(388, 113);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
@@ -156,8 +156,8 @@
             this.tableLayoutPanel2.RowCount = 3;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(373, 72);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(373, 75);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // label1
@@ -227,7 +227,7 @@
             this.checkBox1.AutoSize = true;
             this.checkBox1.Location = new System.Drawing.Point(144, 55);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(119, 14);
+            this.checkBox1.Size = new System.Drawing.Size(119, 17);
             this.checkBox1.TabIndex = 5;
             this.checkBox1.Text = "Enable auto-update\r\n";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -259,9 +259,9 @@
             // 
             this.groupBox3.Controls.Add(this.flowLayoutPanel2);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3.Location = new System.Drawing.Point(396, 119);
+            this.groupBox3.Location = new System.Drawing.Point(396, 122);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(388, 144);
+            this.groupBox3.Size = new System.Drawing.Size(388, 141);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Display List";
@@ -272,7 +272,7 @@
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 16);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(382, 125);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(382, 122);
             this.flowLayoutPanel2.TabIndex = 0;
             this.flowLayoutPanel2.SizeChanged += new System.EventHandler(this.flowLayoutPanel2_SizeChanged);
             // 
