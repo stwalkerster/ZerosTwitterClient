@@ -43,9 +43,9 @@
             this.label1.Location = new System.Drawing.Point(57, 0);
             this.label1.MaximumSize = new System.Drawing.Size(964, 180);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(423, 20);
+            this.label1.Size = new System.Drawing.Size(87, 20);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Welcome to Heriot-Watt University Students\' Union!\r\n";
+            this.label1.Text = "Welcome!";
             // 
             // pictureBox1
             // 
@@ -67,7 +67,6 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(964, 35);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Heriot-Watt Students\' Union";
             this.label2.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // tableLayoutPanel1

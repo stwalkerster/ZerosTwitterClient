@@ -9,7 +9,7 @@ namespace ZerosTwitterClient
         public TweetDisplay()
         {
             InitializeComponent();
-            pictureBox1.Image = ImageCache.fetch("https://twimg0-a.akamaihd.net/profile_images/1168462701/Square_UNIONLOGO_normal.jpg");
+            pictureBox1.Image = ImageCache.fetch("http://twimg0-a.akamaihd.net/sticky/default_profile_images/default_profile_1_normal.png");
         }
 
         public TweetDisplay(Tweet t)
