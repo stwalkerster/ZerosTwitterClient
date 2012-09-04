@@ -40,7 +40,16 @@ namespace ZerosTwitterClient
                 if ((responseStream = response.GetResponseStream()) == null)
                     throw new ArgumentException();
 
-                var xpd = new XPathDocument(responseStream);
+
+                string originaldata = new StreamReader(responseStream).ReadToEnd();
+                string newdata = originaldata
+                    .Replace("<georss:", "<")
+                    .Replace("</georss:", "</");
+
+                Stream datas = new MemoryStream(Encoding.ASCII.GetBytes(newdata));
+
+                var xpd = new XPathDocument(datas);
+                
                 var xpn = xpd.CreateNavigator();
                 var xnm = new XmlNamespaceManager(xpn.NameTable);
                 xnm.AddNamespace("atom", "http://www.w3.org/2005/Atom");
