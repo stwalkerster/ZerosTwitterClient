@@ -121,4 +121,10 @@
   <data name="dots32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\dots32.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="GettingTweets" xml:space="preserve">
+    <value>Getting tweets...</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done. </value>
+  </data>
 </root>

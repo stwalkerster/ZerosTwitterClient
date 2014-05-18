@@ -1,137 +1,314 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows.Forms;
-
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ModerationForm.cs" company="Simon Walker">
+//   Copyright (C) 2014 Simon Walker
+//   
+//   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
+//   documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
+//   the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and 
+//   to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+//   
+//   The above copyright notice and this permission notice shall be included in all copies or substantial portions of 
+//   the Software.
+//   
+//   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+//   THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+//   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+//   TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+//   SOFTWARE.
+// </copyright>
+// <summary>
+//   The moderation form.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 namespace ZerosTwitterClient
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Windows.Forms;
+
+    using ZerosTwitterClient.Properties;
+
+    /// <summary>
+    /// The moderation form.
+    /// </summary>
     public partial class ModerationForm : Form
     {
-        public ModerationForm()
-        {
-            InitializeComponent();
-            tweetGrabberThread = new BackgroundWorker();
-            tweetGrabberThread.DoWork+=addTweets;
-            tweetGrabberThread.RunWorkerCompleted += tweetGrabberThread_RunWorkerCompleted;
-        }
+        #region Static Fields
 
-        void tweetGrabberThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            getMoreTweetsToolStripMenuItem.Enabled = true;
-        }
+        /// <summary>
+        /// The _active tweets.
+        /// </summary>
+        private static readonly List<ulong> ActiveTweets = new List<ulong>();
 
-        private static List<ulong> _activeTweets = new List<ulong>();
+        #endregion
+
+        #region Fields
+
+        /// <summary>
+        /// The display.
+        /// </summary>
         public DisplayForm Display;
 
-        private void ModerationForm_Load(object sender, EventArgs e)
+        /// <summary>
+        /// The tweet grabber thread.
+        /// </summary>
+        private readonly BackgroundWorker tweetGrabberThread;
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        /// <summary>
+        /// Initialises a new instance of the <see cref="ModerationForm"/> class.
+        /// </summary>
+        public ModerationForm()
         {
-            flowLayoutPanel1.Tag = this;
-            Display = new DisplayForm();
-            Display.Show();
+            this.InitializeComponent();
+            this.tweetGrabberThread = new BackgroundWorker();
+            this.tweetGrabberThread.DoWork += this.AddTweets;
+            this.tweetGrabberThread.RunWorkerCompleted += this.TweetGrabberThreadRunWorkerCompleted;
         }
 
-        private void displayFullscreenToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (Display.isRunning)
-            {
-                Display.destroyFeed();
-                displayFullscreenToolStripMenuItem.Checked = false;
-            }
-            else
-            {
-                Display.setupFeed();
+        #endregion
 
-                displayFullscreenToolStripMenuItem.Checked = true;
-            }
-        }
+        #region Delegates
 
-        private BackgroundWorker tweetGrabberThread;
-
-        private void getMoreTweetsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if(tweetGrabberThread.IsBusy) return;
-
-            tweetGrabberThread.RunWorkerAsync();
-            getMoreTweetsToolStripMenuItem.Enabled = false;
-            toolStripStatusLabel1.Text = "Getting tweets...";
-        }
-
-        private void addTweets(object sender, DoWorkEventArgs args)
-        {
-            LinkedList<Tweet> newTweets;
-            try
-            {
-                newTweets = TwitterGrabber.getTweets(Properties.Settings.Default.TwitterSearchTerm);
-                foreach (var t in newTweets)
-                {
-                    if(_activeTweets.Contains(t.Id))
-                        continue;
-
-                    _activeTweets.Add(t.Id);
-
-                    var td = new ModTweet(t);
-                    
-                    addTweetToModPanelAsync(td);
-                }
-
-                toolStripStatusLabel1.Text = "Done. " + newTweets.Count + " tweets fetched.";
-            }
-            catch (Exception ex)
-            {
-                toolStripStatusLabel1.Text = (ex.Message);
-            }
-        }
-
+        /// <summary>
+        /// The add tweet to mod panel async delegate.
+        /// </summary>
+        /// <param name="t">
+        /// The t.
+        /// </param>
         private delegate void AddTweetToModPanelAsyncDelegate(ModTweet t);
-        private void addTweetToModPanelAsync(ModTweet t)
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// The add tweet to mod panel async.
+        /// </summary>
+        /// <param name="t">
+        /// The t.
+        /// </param>
+        private void AddTweetToModPanelAsync(ModTweet t)
         {
-            if(InvokeRequired)
+            if (this.InvokeRequired)
             {
-                Invoke(new AddTweetToModPanelAsyncDelegate(addTweetToModPanelAsync), new object[] {t});
+                this.Invoke(new AddTweetToModPanelAsyncDelegate(this.AddTweetToModPanelAsync), new object[] { t });
                 return;
             }
 
-            flowLayoutPanel1.Controls.Add(t);
+            this.flowLayoutPanel1.Controls.Add(t);
         }
 
-        private void flowLayoutPanel1_SizeChanged(object sender, EventArgs e)
+        /// <summary>
+        /// The add tweets.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="args">
+        /// The args.
+        /// </param>
+        private void AddTweets(object sender, DoWorkEventArgs args)
         {
-            foreach (Control control in flowLayoutPanel1.Controls)
+            try
             {
-                control.Width = flowLayoutPanel1.Width - 26;
+                LinkedList<Tweet> newTweets = TwitterGrabber.GetTweets(Settings.Default.TwitterSearchTerm);
+                foreach (var t in newTweets)
+                {
+                    if (ActiveTweets.Contains(t.Id))
+                    {
+                        continue;
+                    }
+
+                    ActiveTweets.Add(t.Id);
+
+                    var td = new ModTweet(t);
+
+                    this.AddTweetToModPanelAsync(td);
+                }
+
+                this.toolStripStatusLabel1.Text = Resources.Done + string.Format("{0} tweets fetched.", newTweets.Count);
+            }
+            catch (Exception ex)
+            {
+                this.toolStripStatusLabel1.Text = ex.Message;
             }
         }
 
-        private void flowLayoutPanel2_SizeChanged(object sender, EventArgs e)
+        /// <summary>
+        /// The check box 1_ checked changed.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void CheckBox1CheckedChanged(object sender, EventArgs e)
         {
+            this.timer1.Enabled = this.checkBox1.Checked;
+        }
 
-            foreach (Control control in flowLayoutPanel2.Controls)
+        /// <summary>
+        /// The display full-screen tool strip menu item_ click.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void DisplayFullscreenToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            if (this.Display.IsRunning)
             {
-                control.Width = flowLayoutPanel2.Width - 26;
+                this.Display.DestroyFeed();
+                this.displayFullscreenToolStripMenuItem.Checked = false;
+            }
+            else
+            {
+                this.Display.SetupFeed();
+
+                this.displayFullscreenToolStripMenuItem.Checked = true;
             }
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        /// <summary>
+        /// The flow layout panel 1_ size changed.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void FlowLayoutPanel1SizeChanged(object sender, EventArgs e)
         {
-            timer1.Enabled = checkBox1.Checked;
+            foreach (Control control in this.flowLayoutPanel1.Controls)
+            {
+                control.Width = this.flowLayoutPanel1.Width - 26;
+            }
         }
 
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        /// <summary>
+        /// The flow layout panel 2_ size changed.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void FlowLayoutPanel2SizeChanged(object sender, EventArgs e)
         {
-            timer1.Interval = (int)(numericUpDown1.Value * 1000);
+            foreach (Control control in this.flowLayoutPanel2.Controls)
+            {
+                control.Width = this.flowLayoutPanel2.Width - 26;
+            }
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        /// <summary>
+        /// The get more tweets tool strip menu item_ click.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void GetMoreTweetsToolStripMenuItemClick(object sender, EventArgs e)
         {
-            if (tweetGrabberThread.IsBusy) return;
+            if (this.tweetGrabberThread.IsBusy)
+            {
+                return;
+            }
 
-            tweetGrabberThread.RunWorkerAsync();
-            getMoreTweetsToolStripMenuItem.Enabled = false;
+            this.tweetGrabberThread.RunWorkerAsync();
+            this.getMoreTweetsToolStripMenuItem.Enabled = false;
+            this.toolStripStatusLabel1.Text = Resources.GettingTweets;
         }
 
-        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
+        /// <summary>
+        /// The moderation form_ load.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void ModerationFormLoad(object sender, EventArgs e)
         {
-
+            this.flowLayoutPanel1.Tag = this;
+            this.Display = new DisplayForm();
+            this.Display.Show();
         }
+
+        /// <summary>
+        /// The numeric up down 1_ value changed.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void NumericUpDown1ValueChanged(object sender, EventArgs e)
+        {
+            this.timer1.Interval = (int)(this.numericUpDown1.Value * 1000);
+        }
+
+        /// <summary>
+        /// The timer 1_ tick.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void Timer1Tick(object sender, EventArgs e)
+        {
+            if (this.tweetGrabberThread.IsBusy)
+            {
+                return;
+            }
+
+            this.tweetGrabberThread.RunWorkerAsync();
+            this.getMoreTweetsToolStripMenuItem.Enabled = false;
+        }
+
+        /// <summary>
+        /// The tool strip status label 1_ click.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void ToolStripStatusLabel1Click(object sender, EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// The tweet grabber thread_ run worker completed.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void TweetGrabberThreadRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.getMoreTweetsToolStripMenuItem.Enabled = true;
+        }
+
+        #endregion
     }
 }

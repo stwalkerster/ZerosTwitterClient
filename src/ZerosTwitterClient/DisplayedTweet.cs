@@ -50,9 +50,9 @@ namespace ZerosTwitterClient
                 {
                     var x = (TweetDisplay) control;
                     
-                    if (x._t == null) continue;
+                    if (x.T == null) continue;
                     
-                    if (x._t.Id != _t.Id) continue;
+                    if (x.T.Id != _t.Id) continue;
 
                     Program.ModerationForm.Display.flp.Controls.Remove(x);
                     changed = true;
@@ -63,7 +63,7 @@ namespace ZerosTwitterClient
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Program.ModerationForm.Display.addTweet(new TweetDisplay(_t));
+            Program.ModerationForm.Display.AddTweet(new TweetDisplay(_t));
             Program.ModerationForm.flowLayoutPanel2.Controls.SetChildIndex(this,0);
         }
     }

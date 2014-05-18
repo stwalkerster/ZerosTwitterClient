@@ -86,7 +86,7 @@
             this.displayFullscreenToolStripMenuItem.Name = "displayFullscreenToolStripMenuItem";
             this.displayFullscreenToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.displayFullscreenToolStripMenuItem.Text = "Display Fullscreen";
-            this.displayFullscreenToolStripMenuItem.Click += new System.EventHandler(this.displayFullscreenToolStripMenuItem_Click);
+            this.displayFullscreenToolStripMenuItem.Click += new System.EventHandler(this.DisplayFullscreenToolStripMenuItemClick);
             // 
             // toolStripSeparator1
             // 
@@ -104,7 +104,7 @@
             this.getMoreTweetsToolStripMenuItem.Name = "getMoreTweetsToolStripMenuItem";
             this.getMoreTweetsToolStripMenuItem.Size = new System.Drawing.Size(105, 20);
             this.getMoreTweetsToolStripMenuItem.Text = "Get more tweets";
-            this.getMoreTweetsToolStripMenuItem.Click += new System.EventHandler(this.getMoreTweetsToolStripMenuItem_Click);
+            this.getMoreTweetsToolStripMenuItem.Click += new System.EventHandler(this.GetMoreTweetsToolStripMenuItemClick);
             // 
             // tableLayoutPanel1
             // 
@@ -220,7 +220,7 @@
             0,
             0,
             0});
-            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.NumericUpDown1ValueChanged);
             // 
             // checkBox1
             // 
@@ -231,7 +231,7 @@
             this.checkBox1.TabIndex = 5;
             this.checkBox1.Text = "Enable auto-update\r\n";
             this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.CheckBox1CheckedChanged);
             // 
             // groupBox2
             // 
@@ -253,7 +253,7 @@
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(381, 241);
             this.flowLayoutPanel1.TabIndex = 0;
-            this.flowLayoutPanel1.SizeChanged += new System.EventHandler(this.flowLayoutPanel1_SizeChanged);
+            this.flowLayoutPanel1.SizeChanged += new System.EventHandler(this.FlowLayoutPanel1SizeChanged);
             // 
             // groupBox3
             // 
@@ -274,12 +274,12 @@
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(382, 122);
             this.flowLayoutPanel2.TabIndex = 0;
-            this.flowLayoutPanel2.SizeChanged += new System.EventHandler(this.flowLayoutPanel2_SizeChanged);
+            this.flowLayoutPanel2.SizeChanged += new System.EventHandler(this.FlowLayoutPanel2SizeChanged);
             // 
             // timer1
             // 
             this.timer1.Interval = 15000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timer1.Tick += new System.EventHandler(this.Timer1Tick);
             // 
             // statusStrip1
             // 
@@ -295,7 +295,7 @@
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
-            this.toolStripStatusLabel1.Click += new System.EventHandler(this.toolStripStatusLabel1_Click);
+            this.toolStripStatusLabel1.Click += new System.EventHandler(this.ToolStripStatusLabel1Click);
             // 
             // ModerationForm
             // 
@@ -308,7 +308,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "ModerationForm";
             this.Text = "ModerationForm";
-            this.Load += new System.EventHandler(this.ModerationForm_Load);
+            this.Load += new System.EventHandler(this.ModerationFormLoad);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
