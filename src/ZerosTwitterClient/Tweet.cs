@@ -48,7 +48,7 @@ namespace ZerosTwitterClient
         /// <summary>
         /// Gets or sets the image.
         /// </summary>
-        public string Image { get; set; }
+        public string ImageUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the timestamp.

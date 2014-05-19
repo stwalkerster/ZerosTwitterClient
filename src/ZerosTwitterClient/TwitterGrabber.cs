@@ -130,7 +130,7 @@ namespace ZerosTwitterClient
                                 t.Content = HttpUtility.HtmlDecode(xtr.ReadElementContentAsString()).Replace("&", "&&");
                                 break;
                             case "link":
-                                t.Image = xtr.GetAttribute("href");
+                                t.ImageUrl = xtr.GetAttribute("href");
                                 break;
                             case "name":
                                 t.Author = xtr.ReadElementContentAsString();

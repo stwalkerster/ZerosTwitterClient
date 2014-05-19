@@ -65,7 +65,7 @@ namespace ZerosTwitterClient
             this.label2.Text = t.Author;
             this.button1.Enabled = this.button2.Enabled = true;
 
-            this.pictureBox1.Image = ImageCache.StaticFetch(t.Image);
+            this.pictureBox1.Image = ImageCache.StaticFetch(t.ImageUrl);
             this.label3.Text = t.Timestamp;
         }
 

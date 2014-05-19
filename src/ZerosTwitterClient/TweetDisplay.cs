@@ -65,7 +65,7 @@ namespace ZerosTwitterClient
             this.label1.Text = t.Content;
             this.label2.Text = t.Author;
 
-            this.pictureBox1.Image = ImageCache.StaticFetch(t.Image);
+            this.pictureBox1.Image = ImageCache.StaticFetch(t.ImageUrl);
         }
 
         #endregion
