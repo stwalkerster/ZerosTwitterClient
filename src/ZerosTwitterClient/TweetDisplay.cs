@@ -48,7 +48,7 @@ namespace ZerosTwitterClient
         {
             this.InitializeComponent();
             this.pictureBox1.Image =
-                ImageCache.fetch(
+                ImageCache.StaticFetch(
                     "http://twimg0-a.akamaihd.net/sticky/default_profile_images/default_profile_1_normal.png");
         }
 
@@ -65,7 +65,7 @@ namespace ZerosTwitterClient
             this.label1.Text = t.Content;
             this.label2.Text = t.Author;
 
-            this.pictureBox1.Image = ImageCache.fetch(t.Image);
+            this.pictureBox1.Image = ImageCache.StaticFetch(t.Image);
         }
 
         #endregion

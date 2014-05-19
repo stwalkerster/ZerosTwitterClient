@@ -22,7 +22,7 @@ namespace ZerosTwitterClient
             label2.Text = t.Author;
             button1.Enabled = button2.Enabled = true;
 
-            pictureBox1.Image = ImageCache.fetch(t.Image);
+            pictureBox1.Image = ImageCache.StaticFetch(t.Image);
             label3.Text = t.Timestamp;
         }
 

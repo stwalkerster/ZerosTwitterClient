@@ -1,42 +1,167 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using System.Net;
-
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ImageCache.cs" company="Simon Walker">
+//   Copyright (C) 2014 Simon Walker
+//   
+//   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
+//   documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
+//   the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and 
+//   to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+//   
+//   The above copyright notice and this permission notice shall be included in all copies or substantial portions of 
+//   the Software.
+//   
+//   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+//   THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+//   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+//   TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+//   SOFTWARE.
+// </copyright>
+// <summary>
+//   The image cache.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 namespace ZerosTwitterClient
 {
-    class ImageCache
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.Net;
+
+    /// <summary>
+    /// The image cache.
+    /// </summary>
+    internal class ImageCache
     {
-        private static Dictionary<string, Image> cache = new Dictionary<string, Image>();
+        #region Static Fields
 
-        private static object lockObject = new object();
+        /// <summary>
+        /// The static cache.
+        /// </summary>
+        [Obsolete]
+        private static readonly ImageCache StaticCache = new ImageCache();
 
-        public static bool hasImage(string url)
+        #endregion
+
+        #region Fields
+
+        /// <summary>
+        /// The cache.
+        /// </summary>
+        private readonly IDictionary<string, Image> cache;
+
+        /// <summary>
+        /// The lock object.
+        /// </summary>
+        private readonly object lockObject = new object();
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        /// <summary>
+        /// Initialises a new instance of the <see cref="ImageCache"/> class.
+        /// </summary>
+        public ImageCache()
         {
-            lock (lockObject)
-            {
-                return cache.ContainsKey(url);
-            }
+            this.cache = new Dictionary<string, Image>();
         }
 
-        public static Image fetch(string url)
+        #endregion
+
+        #region Public Methods and Operators
+
+        /// <summary>
+        /// The Fetch.
+        /// </summary>
+        /// <param name="url">
+        /// The url.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Image"/>.
+        /// </returns>
+        [Obsolete]
+        public static Image StaticFetch(string url)
         {
-            if (!hasImage(url))
+            return StaticCache.Fetch(url);
+        }
+
+        /// <summary>
+        /// The fetch.
+        /// </summary>
+        /// <param name="url">
+        /// The url.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Image"/>.
+        /// </returns>
+        public Image Fetch(string url)
+        {
+            if (!this.HasImage(url))
             {
-                Image image = retrieveImage(url);
-                lock (lockObject)
+                Image image = this.RetrieveImage(url);
+                lock (this.lockObject)
                 {
-                    cache.Add(url, image);
+                    this.cache.Add(url, image);
                 }
+
+                return image;
             }
-            lock (lockObject)
+
+            lock (this.lockObject)
             {
-                return cache[url];
+                return this.cache[url];
             }
         }
 
-        private static Image retrieveImage(string url)
+        /// <summary>
+        /// The has image.
+        /// </summary>
+        /// <param name="url">
+        /// The url.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
+        public bool HasImage(string url)
         {
-            return Image.FromStream(WebRequest.Create(url).GetResponse().GetResponseStream());
+            lock (this.lockObject)
+            {
+                return this.cache.ContainsKey(url);
+            }
         }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// The retrieve image.
+        /// </summary>
+        /// <param name="url">
+        /// The url.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Image"/>.
+        /// </returns>
+        private Image RetrieveImage(string url)
+        {
+            var webResponse = WebRequest.Create(url).GetResponse();
+
+            if (webResponse == null)
+            {
+                throw new ApplicationException("Null webresponse fetching image");
+            }
+
+            var responseStream = webResponse.GetResponseStream();
+
+            if (responseStream == null)
+            {
+                throw new ApplicationException("Null response stream fetching image");
+            }
+
+            return Image.FromStream(responseStream);
+        }
+
+        #endregion
     }
 }
