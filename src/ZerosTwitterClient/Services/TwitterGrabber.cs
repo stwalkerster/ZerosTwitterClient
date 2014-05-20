@@ -20,8 +20,7 @@
 //   The twitter grabber.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
-namespace ZerosTwitterClient
+namespace ZerosTwitterClient.Services
 {
     using System;
     using System.Collections.Generic;
@@ -37,19 +36,39 @@ namespace ZerosTwitterClient
     /// <summary>
     /// The twitter grabber.
     /// </summary>
-    internal class TwitterGrabber
+    internal class TwitterGrabber : ITwitterGrabber
     {
-        #region Static Fields
+        #region Fields
 
         /// <summary>
-        /// The _twitter lock.
+        /// The image cache.
         /// </summary>
-        private static readonly object TwitterLock = new object();
+        private readonly IImageCache imageCache;
+
+        /// <summary>
+        /// The twitter lock.
+        /// </summary>
+        private readonly object twitterLock = new object();
 
         /// <summary>
         /// The _id.
         /// </summary>
-        private static ulong id;
+        private ulong id;
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        /// <summary>
+        /// Initialises a new instance of the <see cref="TwitterGrabber"/> class.
+        /// </summary>
+        /// <param name="imageCache">
+        /// The image cache.
+        /// </param>
+        public TwitterGrabber(IImageCache imageCache)
+        {
+            this.imageCache = imageCache;
+        }
 
         #endregion
 
@@ -61,22 +80,19 @@ namespace ZerosTwitterClient
         /// <param name="search">
         /// The search.
         /// </param>
-        /// <param name="imageCache">
-        /// The image Cache.
-        /// </param>
         /// <returns>
         /// The <see cref="LinkedList{Tweet}"/>.
         /// </returns>
-        public static LinkedList<Tweet> GetTweets(string search, IImageCache imageCache)
+        public LinkedList<Tweet> GetTweets(string search)
         {
             var tweets = new LinkedList<Tweet>();
 
-            lock (TwitterLock)
+            lock (this.twitterLock)
             {
                 var webRequest =
                     (HttpWebRequest)
                     WebRequest.Create(
-                        "http://search.twitter.com/search.atom?since_id=" + id + "&result_type=recent" + "&q="
+                        "http://search.twitter.com/search.atom?since_id=" + this.id + "&result_type=recent" + "&q="
                         + HttpUtility.UrlEncode(search));
 
                 webRequest.UserAgent = "HwunionTwitterClient/1.0 (+ simon@stwalkerster.net )";
@@ -110,7 +126,7 @@ namespace ZerosTwitterClient
 
                 while (xpni.MoveNext())
                 {
-                    var t = new Tweet(imageCache);
+                    var t = new Tweet(this.imageCache);
 
                     var xtr = new XmlTextReader(new MemoryStream(Encoding.UTF8.GetBytes(xpni.Current.OuterXml)));
 
@@ -142,9 +158,9 @@ namespace ZerosTwitterClient
                         }
                     }
 
-                    if (id < t.Id)
+                    if (this.id < t.Id)
                     {
-                        id = t.Id;
+                        this.id = t.Id;
                     }
 
                     tweets.AddLast(t);

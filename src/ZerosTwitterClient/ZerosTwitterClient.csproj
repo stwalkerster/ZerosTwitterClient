@@ -71,6 +71,7 @@
     <Compile Include="Forms\DisplayForm.Designer.cs">
       <DependentUpon>DisplayForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Services\Interfaces\ITwitterGrabber.cs" />
     <Compile Include="Services\Interfaces\IImageCache.cs" />
     <Compile Include="Services\ImageCache.cs" />
     <Compile Include="Forms\ModerationForm.cs">
@@ -94,7 +95,7 @@
     <Compile Include="TweetDisplay.Designer.cs">
       <DependentUpon>TweetDisplay.cs</DependentUpon>
     </Compile>
-    <Compile Include="TwitterGrabber.cs" />
+    <Compile Include="Services\TwitterGrabber.cs" />
     <EmbeddedResource Include="DisplayedTweet.resx">
       <DependentUpon>DisplayedTweet.cs</DependentUpon>
     </EmbeddedResource>

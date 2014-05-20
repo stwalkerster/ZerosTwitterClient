@@ -30,6 +30,8 @@ namespace ZerosTwitterClient
     using Castle.Windsor;
 
     using ZerosTwitterClient.Forms;
+    using ZerosTwitterClient.Services;
+    using ZerosTwitterClient.Services.Interfaces;
 
     /// <summary>
     /// The program.
@@ -66,7 +68,8 @@ namespace ZerosTwitterClient
         {
             var container = new WindsorContainer();
             container.Register(
-                Classes.FromThisAssembly().InNamespace("ZerosTwitterClient.Services").WithService.AllInterfaces(),
+                Component.For<IImageCache>().ImplementedBy<ImageCache>(),
+                Component.For<ITwitterGrabber>().ImplementedBy<TwitterGrabber>(),
                 Component.For<DisplayForm>(),
                 Component.For<ModerationForm>());
 

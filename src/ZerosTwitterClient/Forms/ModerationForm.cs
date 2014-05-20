@@ -47,9 +47,9 @@ namespace ZerosTwitterClient.Forms
         #region Fields
 
         /// <summary>
-        /// The image cache.
+        /// The twitter grabber.
         /// </summary>
-        private readonly IImageCache imageCache;
+        private readonly ITwitterGrabber twitterGrabber;
 
         /// <summary>
         /// The tweet grabber thread.
@@ -66,12 +66,12 @@ namespace ZerosTwitterClient.Forms
         /// <param name="display">
         /// The display.
         /// </param>
-        /// <param name="imageCache">
-        /// The image Cache.
+        /// <param name="twitterGrabber">
+        /// The twitter Grabber.
         /// </param>
-        public ModerationForm(DisplayForm display, IImageCache imageCache)
+        public ModerationForm(DisplayForm display, ITwitterGrabber twitterGrabber)
         {
-            this.imageCache = imageCache;
+            this.twitterGrabber = twitterGrabber;
             this.Display = display;
 
             this.InitializeComponent();
@@ -135,9 +135,7 @@ namespace ZerosTwitterClient.Forms
         {
             try
             {
-                LinkedList<Tweet> newTweets = TwitterGrabber.GetTweets(
-                    Settings.Default.TwitterSearchTerm, 
-                    this.imageCache);
+                LinkedList<Tweet> newTweets = this.twitterGrabber.GetTweets(Settings.Default.TwitterSearchTerm);
                 foreach (var t in newTweets)
                 {
                     if (ActiveTweets.Contains(t.Id))
