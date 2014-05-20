@@ -32,6 +32,8 @@ namespace ZerosTwitterClient
     using System.Xml;
     using System.Xml.XPath;
 
+    using ZerosTwitterClient.Services.Interfaces;
+
     /// <summary>
     /// The twitter grabber.
     /// </summary>
@@ -59,14 +61,13 @@ namespace ZerosTwitterClient
         /// <param name="search">
         /// The search.
         /// </param>
+        /// <param name="imageCache">
+        /// The image Cache.
+        /// </param>
         /// <returns>
-        /// The <see cref="LinkedList"/>.
+        /// The <see cref="LinkedList{Tweet}"/>.
         /// </returns>
-        /// <exception cref="WebException">
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// </exception>
-        public static LinkedList<Tweet> GetTweets(string search = "#hwunion")
+        public static LinkedList<Tweet> GetTweets(string search, IImageCache imageCache)
         {
             var tweets = new LinkedList<Tweet>();
 
@@ -109,7 +110,7 @@ namespace ZerosTwitterClient
 
                 while (xpni.MoveNext())
                 {
-                    var t = new Tweet();
+                    var t = new Tweet(imageCache);
 
                     var xtr = new XmlTextReader(new MemoryStream(Encoding.UTF8.GetBytes(xpni.Current.OuterXml)));
 

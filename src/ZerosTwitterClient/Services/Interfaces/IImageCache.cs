@@ -28,7 +28,7 @@ namespace ZerosTwitterClient.Services.Interfaces
     /// <summary>
     /// The ImageCache interface.
     /// </summary>
-    internal interface IImageCache
+    public interface IImageCache
     {
         #region Public Methods and Operators
 

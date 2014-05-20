@@ -20,14 +20,41 @@
 //   The tweet.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace ZerosTwitterClient
 {
+    using System.Drawing;
+
+    using ZerosTwitterClient.Services.Interfaces;
+
     /// <summary>
     /// The tweet.
     /// </summary>
     public class Tweet
     {
+        #region Fields
+
+        /// <summary>
+        /// The image cache.
+        /// </summary>
+        private readonly IImageCache imageCache;
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        /// <summary>
+        /// Initialises a new instance of the <see cref="Tweet"/> class.
+        /// </summary>
+        /// <param name="imageCache">
+        /// The image cache.
+        /// </param>
+        public Tweet(IImageCache imageCache)
+        {
+            this.imageCache = imageCache;
+        }
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -49,6 +76,14 @@ namespace ZerosTwitterClient
         /// Gets or sets the image.
         /// </summary>
         public string ImageUrl { get; set; }
+
+        public Image Image
+        {
+            get
+            {
+                return this.imageCache.Fetch(this.ImageUrl);
+            }
+        }
 
         /// <summary>
         /// Gets or sets the timestamp.

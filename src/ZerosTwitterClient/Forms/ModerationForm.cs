@@ -28,12 +28,18 @@ namespace ZerosTwitterClient.Forms
     using System.Windows.Forms;
 
     using ZerosTwitterClient.Properties;
+    using ZerosTwitterClient.Services.Interfaces;
 
     /// <summary>
     /// The moderation form.
     /// </summary>
     public partial class ModerationForm : Form
     {
+        /// <summary>
+        /// The image cache.
+        /// </summary>
+        private readonly IImageCache imageCache;
+
         #region Static Fields
 
         /// <summary>
@@ -46,9 +52,9 @@ namespace ZerosTwitterClient.Forms
         #region Fields
 
         /// <summary>
-        /// The display.
+        /// Gets the display.
         /// </summary>
-        public DisplayForm Display;
+        public DisplayForm Display { get; private set; }
 
         /// <summary>
         /// The tweet grabber thread.
@@ -62,8 +68,11 @@ namespace ZerosTwitterClient.Forms
         /// <summary>
         /// Initialises a new instance of the <see cref="ModerationForm"/> class.
         /// </summary>
-        public ModerationForm()
+        public ModerationForm(DisplayForm display, IImageCache imageCache)
         {
+            this.imageCache = imageCache;
+            this.Display = display;
+
             this.InitializeComponent();
             this.tweetGrabberThread = new BackgroundWorker();
             this.tweetGrabberThread.DoWork += this.AddTweets;
@@ -116,7 +125,7 @@ namespace ZerosTwitterClient.Forms
         {
             try
             {
-                LinkedList<Tweet> newTweets = TwitterGrabber.GetTweets(Settings.Default.TwitterSearchTerm);
+                LinkedList<Tweet> newTweets = TwitterGrabber.GetTweets(Settings.Default.TwitterSearchTerm, this.imageCache);
                 foreach (var t in newTweets)
                 {
                     if (ActiveTweets.Contains(t.Id))
@@ -244,7 +253,6 @@ namespace ZerosTwitterClient.Forms
         private void ModerationFormLoad(object sender, EventArgs e)
         {
             this.flowLayoutPanel1.Tag = this;
-            this.Display = new DisplayForm();
             this.Display.Show();
         }
 
