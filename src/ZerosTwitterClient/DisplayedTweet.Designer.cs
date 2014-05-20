@@ -70,7 +70,6 @@ namespace ZerosTwitterClient
             this.label1.Size = new System.Drawing.Size(463, 48);
             this.label1.TabIndex = 0;
             this.label1.Text = "<unloaded tweet>";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // button1
             // 
@@ -82,7 +81,7 @@ namespace ZerosTwitterClient
             this.button1.TabIndex = 3;
             this.button1.Text = "Re-Show";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.Button1Click);
             // 
             // button2
             // 
@@ -93,7 +92,7 @@ namespace ZerosTwitterClient
             this.button2.TabIndex = 4;
             this.button2.Text = "Delete";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.Click += new System.EventHandler(this.Button2Click);
             // 
             // label3
             // 
@@ -116,7 +115,7 @@ namespace ZerosTwitterClient
             this.Controls.Add(this.pictureBox1);
             this.Name = "DisplayedTweet";
             this.Size = new System.Drawing.Size(605, 75);
-            this.Load += new System.EventHandler(this.DisplayedTweet_Load);
+            this.Load += new System.EventHandler(this.DisplayedTweetLoad);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
