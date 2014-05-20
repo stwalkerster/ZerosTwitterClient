@@ -73,10 +73,8 @@ namespace ZerosTwitterClient
                 Component.For<DisplayForm>(),
                 Component.For<ModerationForm>());
 
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
 
             moderationForm = container.Resolve<ModerationForm>();
             Application.Run(moderationForm);
