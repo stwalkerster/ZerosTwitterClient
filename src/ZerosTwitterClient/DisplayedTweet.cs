@@ -26,8 +26,6 @@ namespace ZerosTwitterClient
     using System;
     using System.Windows.Forms;
 
-    using ZerosTwitterClient.Services;
-
     /// <summary>
     /// The displayed tweet.
     /// </summary>
@@ -67,7 +65,7 @@ namespace ZerosTwitterClient
             this.label2.Text = tweet.Author;
             this.button1.Enabled = this.button2.Enabled = true;
 
-            this.pictureBox1.Image = ImageCache.StaticFetch(tweet.ImageUrl);
+            this.pictureBox1.Image = tweet.Image;
             this.label3.Text = tweet.Timestamp;
         }
 

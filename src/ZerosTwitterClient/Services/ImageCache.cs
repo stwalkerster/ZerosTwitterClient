@@ -34,16 +34,6 @@ namespace ZerosTwitterClient.Services
     /// </summary>
     internal class ImageCache : IImageCache
     {
-        #region Static Fields
-
-        /// <summary>
-        /// The static cache.
-        /// </summary>
-        [Obsolete]
-        private static readonly ImageCache StaticCache = new ImageCache();
-
-        #endregion
-
         #region Fields
 
         /// <summary>
@@ -71,21 +61,6 @@ namespace ZerosTwitterClient.Services
         #endregion
 
         #region Public Methods and Operators
-
-        /// <summary>
-        /// The Fetch.
-        /// </summary>
-        /// <param name="url">
-        /// The url.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Image"/>.
-        /// </returns>
-        [Obsolete]
-        public static Image StaticFetch(string url)
-        {
-            return StaticCache.Fetch(url);
-        }
 
         /// <summary>
         /// The fetch.

@@ -26,8 +26,6 @@ namespace ZerosTwitterClient
     using System;
     using System.Windows.Forms;
 
-    using ZerosTwitterClient.Services;
-
     /// <summary>
     /// The mod tweet.
     /// </summary>
@@ -67,7 +65,7 @@ namespace ZerosTwitterClient
             this.label2.Text = t.Author;
             this.button1.Enabled = this.button2.Enabled = true;
 
-            this.pictureBox1.Image = ImageCache.StaticFetch(t.ImageUrl);
+            this.pictureBox1.Image = t.Image;
             this.label3.Text = t.Timestamp;
         }
 

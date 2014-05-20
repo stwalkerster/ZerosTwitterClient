@@ -25,8 +25,6 @@ namespace ZerosTwitterClient
 {
     using System.Windows.Forms;
 
-    using ZerosTwitterClient.Services;
-
     /// <summary>
     /// The tweet display.
     /// </summary>
@@ -46,17 +44,6 @@ namespace ZerosTwitterClient
         /// <summary>
         /// Initialises a new instance of the <see cref="TweetDisplay"/> class.
         /// </summary>
-        public TweetDisplay()
-        {
-            this.InitializeComponent();
-            this.pictureBox1.Image =
-                ImageCache.StaticFetch(
-                    "http://twimg0-a.akamaihd.net/sticky/default_profile_images/default_profile_1_normal.png");
-        }
-
-        /// <summary>
-        /// Initialises a new instance of the <see cref="TweetDisplay"/> class.
-        /// </summary>
         /// <param name="t">
         /// The t.
         /// </param>
@@ -67,7 +54,7 @@ namespace ZerosTwitterClient
             this.label1.Text = t.Content;
             this.label2.Text = t.Author;
 
-            this.pictureBox1.Image = ImageCache.StaticFetch(t.ImageUrl);
+            this.pictureBox1.Image = t.Image;
         }
 
         #endregion
