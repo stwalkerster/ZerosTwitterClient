@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Program.cs" company="Simon Walker">
+// <copyright file="TwitterLogin.cs" company="Simon Walker">
 //   Copyright (C) 2014 Simon Walker
 //   
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -17,45 +17,40 @@
 //   SOFTWARE.
 // </copyright>
 // <summary>
-//   The program.
+//   The twitter login.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace ZerosTwitterClient
 {
     using System;
+    using System.Diagnostics;
     using System.Windows.Forms;
 
-    using Castle.MicroKernel.Registration;
-    using Castle.Windsor;
-
+    using Tweetinvi;
+    using Tweetinvi.Core.Interfaces.Credentials;
     using Tweetinvi.Core.Interfaces.oAuth;
 
-    using ZerosTwitterClient.Forms;
-    using ZerosTwitterClient.Services;
-    using ZerosTwitterClient.Services.Interfaces;
-
     /// <summary>
-    /// The program.
+    /// The twitter login.
     /// </summary>
-    internal static class Program
+    public partial class TwitterLogin : Form
     {
-        #region Static Fields
+        /// <summary>
+        /// The temporary application credentials.
+        /// </summary>
+        private ITemporaryCredentials applicationCredentials;
+
+        private IOAuthCredentials credentials;
+
+        #region Constructors and Destructors
 
         /// <summary>
-        /// The moderation form.
+        /// Initialises a new instance of the <see cref="TwitterLogin"/> class.
         /// </summary>
-        private static ModerationForm moderationForm;
-
-        /// <summary>
-        /// Gets the moderation form.
-        /// </summary>
-        public static ModerationForm ModerationForm
+        public TwitterLogin()
         {
-            get
-            {
-                return moderationForm;
-            }
+            this.InitializeComponent();
         }
 
         #endregion
@@ -63,29 +58,46 @@ namespace ZerosTwitterClient
         #region Methods
 
         /// <summary>
-        /// The main entry point for the application.
+        /// The button 1_ click.
         /// </summary>
-        [STAThread]
-        private static void Main()
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void Button1Click(object sender, EventArgs e)
         {
-            var container = new WindsorContainer();
-            container.Register(
-                Component.For<IImageCache>().ImplementedBy<ImageCache>(),
-                Component.For<ITwitterGrabber>().ImplementedBy<TwitterGrabber>(),
-                Component.For<DisplayForm>(),
-                Component.For<TwitterLogin>(),
-                Component.For<ModerationForm>());
+            this.applicationCredentials = CredentialsCreator.GenerateApplicationCredentials(this.consumerKeyBox.Text, this.consumerSecretBox.Text);
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            var authorizationUrl = CredentialsCreator.GetAuthorizationURL(this.applicationCredentials);
 
-            IOAuthCredentials credentials = container.Resolve<TwitterLogin>().DisplayLogin();
-            container.Register(Component.For<IOAuthCredentials>().Instance(credentials));
-
-            moderationForm = container.Resolve<ModerationForm>();
-            Application.Run(moderationForm);
+            Process.Start(authorizationUrl);
         }
 
         #endregion
+
+        /// <summary>
+        /// The auth app click.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void AuthAppClick(object sender, EventArgs e)
+        {
+            this.credentials = CredentialsCreator.GetCredentialsFromVerifierCode(this.applicationPinBox.Text, this.applicationCredentials);
+
+            this.Close();
+        }
+
+        public IOAuthCredentials DisplayLogin()
+        {
+            this.ShowDialog();
+
+            return this.credentials;
+        }
     }
 }
