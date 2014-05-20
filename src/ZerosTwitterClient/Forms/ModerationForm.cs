@@ -35,11 +35,6 @@ namespace ZerosTwitterClient.Forms
     /// </summary>
     public partial class ModerationForm : Form
     {
-        /// <summary>
-        /// The image cache.
-        /// </summary>
-        private readonly IImageCache imageCache;
-
         #region Static Fields
 
         /// <summary>
@@ -52,9 +47,9 @@ namespace ZerosTwitterClient.Forms
         #region Fields
 
         /// <summary>
-        /// Gets the display.
+        /// The image cache.
         /// </summary>
-        public DisplayForm Display { get; private set; }
+        private readonly IImageCache imageCache;
 
         /// <summary>
         /// The tweet grabber thread.
@@ -68,6 +63,12 @@ namespace ZerosTwitterClient.Forms
         /// <summary>
         /// Initialises a new instance of the <see cref="ModerationForm"/> class.
         /// </summary>
+        /// <param name="display">
+        /// The display.
+        /// </param>
+        /// <param name="imageCache">
+        /// The image Cache.
+        /// </param>
         public ModerationForm(DisplayForm display, IImageCache imageCache)
         {
             this.imageCache = imageCache;
@@ -90,6 +91,15 @@ namespace ZerosTwitterClient.Forms
         /// The t.
         /// </param>
         private delegate void AddTweetToModPanelAsyncDelegate(ModTweet t);
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// Gets the display.
+        /// </summary>
+        public DisplayForm Display { get; private set; }
 
         #endregion
 
@@ -125,7 +135,9 @@ namespace ZerosTwitterClient.Forms
         {
             try
             {
-                LinkedList<Tweet> newTweets = TwitterGrabber.GetTweets(Settings.Default.TwitterSearchTerm, this.imageCache);
+                LinkedList<Tweet> newTweets = TwitterGrabber.GetTweets(
+                    Settings.Default.TwitterSearchTerm, 
+                    this.imageCache);
                 foreach (var t in newTweets)
                 {
                     if (ActiveTweets.Contains(t.Id))

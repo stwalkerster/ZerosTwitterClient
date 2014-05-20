@@ -20,7 +20,6 @@
 //   The display form.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace ZerosTwitterClient.Forms
 {
     using System.Drawing;
@@ -31,15 +30,6 @@ namespace ZerosTwitterClient.Forms
     /// </summary>
     public partial class DisplayForm : Form
     {
-        #region Fields
-
-        /// <summary>
-        /// The flp.
-        /// </summary>
-        public FlowLayoutPanel flp;
-
-        #endregion
-
         #region Constructors and Destructors
 
         /// <summary>
@@ -53,6 +43,11 @@ namespace ZerosTwitterClient.Forms
         #endregion
 
         #region Public Properties
+
+        /// <summary>
+        /// Gets or sets the flow layout panel.
+        /// </summary>
+        public FlowLayoutPanel FlowLayoutPanel { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether is running.
@@ -71,12 +66,12 @@ namespace ZerosTwitterClient.Forms
         /// </param>
         public void AddTweet(TweetDisplay t)
         {
-            if (this.flp != null)
+            if (this.FlowLayoutPanel != null)
             {
-                this.flp.Controls.Add(t);
+                this.FlowLayoutPanel.Controls.Add(t);
 
                 // move it to the top
-                this.flp.Controls.SetChildIndex(t, 0);
+                this.FlowLayoutPanel.Controls.SetChildIndex(t, 0);
             }
         }
 
@@ -103,17 +98,17 @@ namespace ZerosTwitterClient.Forms
             this.Controls.Clear();
             this.SuspendLayout();
 
-            this.flp = new FlowLayoutPanel
-                           {
-                               Dock = DockStyle.Fill, 
-                               BorderStyle = BorderStyle.FixedSingle, 
-                               BackColor = Color.Black, 
-                               ForeColor = Color.White, 
-                               Padding = new Padding(10)
-                           };
+            this.FlowLayoutPanel = new FlowLayoutPanel
+                                       {
+                                           Dock = DockStyle.Fill, 
+                                           BorderStyle = BorderStyle.FixedSingle, 
+                                           BackColor = Color.Black, 
+                                           ForeColor = Color.White, 
+                                           Padding = new Padding(10)
+                                       };
 
-            // flp.Controls.Add(new TweetDisplay());
-            this.Controls.Add(this.flp);
+            // FlowLayoutPanel.Controls.Add(new TweetDisplay());
+            this.Controls.Add(this.FlowLayoutPanel);
             this.ResumeLayout(true);
         }
 

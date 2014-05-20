@@ -121,7 +121,7 @@ namespace ZerosTwitterClient
             do
             {
                 changed = false;
-                foreach (var control in Program.ModerationForm.Display.flp.Controls)
+                foreach (var control in Program.ModerationForm.Display.FlowLayoutPanel.Controls)
                 {
                     var x = (TweetDisplay)control;
 
@@ -135,7 +135,7 @@ namespace ZerosTwitterClient
                         continue;
                     }
 
-                    Program.ModerationForm.Display.flp.Controls.Remove(x);
+                    Program.ModerationForm.Display.FlowLayoutPanel.Controls.Remove(x);
                     changed = true;
                 }
             }
