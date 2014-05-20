@@ -49,7 +49,7 @@ namespace ZerosTwitterClient
         /// <summary>
         /// The _id.
         /// </summary>
-        private static ulong _id;
+        private static ulong id;
 
         #endregion
 
@@ -76,7 +76,7 @@ namespace ZerosTwitterClient
                 var webRequest =
                     (HttpWebRequest)
                     WebRequest.Create(
-                        "http://search.twitter.com/search.atom?since_id=" + _id + "&result_type=recent" + "&q="
+                        "http://search.twitter.com/search.atom?since_id=" + id + "&result_type=recent" + "&q="
                         + HttpUtility.UrlEncode(search));
 
                 webRequest.UserAgent = "HwunionTwitterClient/1.0 (+ simon@stwalkerster.net )";
@@ -142,9 +142,9 @@ namespace ZerosTwitterClient
                         }
                     }
 
-                    if (_id < t.Id)
+                    if (id < t.Id)
                     {
-                        _id = t.Id;
+                        id = t.Id;
                     }
 
                     tweets.AddLast(t);
