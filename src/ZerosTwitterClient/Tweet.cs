@@ -73,10 +73,8 @@ namespace ZerosTwitterClient
         public ulong Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the image.
+        /// Gets the image.
         /// </summary>
-        public string ImageUrl { get; set; }
-
         public Image Image
         {
             get
@@ -84,6 +82,11 @@ namespace ZerosTwitterClient
                 return this.imageCache.Fetch(this.ImageUrl);
             }
         }
+
+        /// <summary>
+        /// Gets or sets the image.
+        /// </summary>
+        public string ImageUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the timestamp.

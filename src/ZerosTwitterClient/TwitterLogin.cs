@@ -20,7 +20,6 @@
 //   The twitter login.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace ZerosTwitterClient
 {
     using System;
@@ -36,12 +35,19 @@ namespace ZerosTwitterClient
     /// </summary>
     public partial class TwitterLogin : Form
     {
+        #region Fields
+
         /// <summary>
         /// The temporary application credentials.
         /// </summary>
         private ITemporaryCredentials applicationCredentials;
 
+        /// <summary>
+        /// The credentials.
+        /// </summary>
         private IOAuthCredentials credentials;
+
+        #endregion
 
         #region Constructors and Destructors
 
@@ -55,7 +61,42 @@ namespace ZerosTwitterClient
 
         #endregion
 
+        #region Public Methods and Operators
+
+        /// <summary>
+        /// The display login.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="IOAuthCredentials"/>.
+        /// </returns>
+        public IOAuthCredentials DisplayLogin()
+        {
+            this.ShowDialog();
+
+            return this.credentials;
+        }
+
+        #endregion
+
         #region Methods
+
+        /// <summary>
+        /// The authorise application button click
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void AuthAppClick(object sender, EventArgs e)
+        {
+            this.credentials = CredentialsCreator.GetCredentialsFromVerifierCode(
+                this.applicationPinBox.Text, 
+                this.applicationCredentials);
+
+            this.Close();
+        }
 
         /// <summary>
         /// The button 1_ click.
@@ -68,7 +109,9 @@ namespace ZerosTwitterClient
         /// </param>
         private void Button1Click(object sender, EventArgs e)
         {
-            this.applicationCredentials = CredentialsCreator.GenerateApplicationCredentials(this.consumerKeyBox.Text, this.consumerSecretBox.Text);
+            this.applicationCredentials = CredentialsCreator.GenerateApplicationCredentials(
+                this.consumerKeyBox.Text, 
+                this.consumerSecretBox.Text);
 
             var authorizationUrl = CredentialsCreator.GetAuthorizationURL(this.applicationCredentials);
 
@@ -76,28 +119,5 @@ namespace ZerosTwitterClient
         }
 
         #endregion
-
-        /// <summary>
-        /// The auth app click.
-        /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The e.
-        /// </param>
-        private void AuthAppClick(object sender, EventArgs e)
-        {
-            this.credentials = CredentialsCreator.GetCredentialsFromVerifierCode(this.applicationPinBox.Text, this.applicationCredentials);
-
-            this.Close();
-        }
-
-        public IOAuthCredentials DisplayLogin()
-        {
-            this.ShowDialog();
-
-            return this.credentials;
-        }
     }
 }

@@ -20,7 +20,6 @@
 //   The displayed tweet.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace ZerosTwitterClient
 {
     using System;
@@ -74,20 +73,6 @@ namespace ZerosTwitterClient
         #region Methods
 
         /// <summary>
-        /// The displayed tweet_ load.
-        /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The e.
-        /// </param>
-        private void DisplayedTweetLoad(object sender, EventArgs e)
-        {
-            this.Width = this.Parent.Width - 26;
-        }
-
-        /// <summary>
         /// The button 1_ click.
         /// </summary>
         /// <param name="sender">
@@ -138,6 +123,20 @@ namespace ZerosTwitterClient
                 }
             }
             while (changed);
+        }
+
+        /// <summary>
+        /// The displayed tweet_ load.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void DisplayedTweetLoad(object sender, EventArgs e)
+        {
+            this.Width = this.Parent.Width - 26;
         }
 
         #endregion

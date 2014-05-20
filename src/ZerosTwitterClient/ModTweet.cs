@@ -20,7 +20,6 @@
 //   The mod tweet.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace ZerosTwitterClient
 {
     using System;
@@ -74,20 +73,6 @@ namespace ZerosTwitterClient
         #region Methods
 
         /// <summary>
-        /// The mod tweet_ load.
-        /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The e.
-        /// </param>
-        private void ModTweetLoad(object sender, EventArgs e)
-        {
-            this.Width = this.Parent.Width - 26;
-        }
-
-        /// <summary>
         /// The button 1_ click.
         /// </summary>
         /// <param name="sender">
@@ -130,6 +115,20 @@ namespace ZerosTwitterClient
         /// </param>
         private void Label1Click(object sender, EventArgs e)
         {
+        }
+
+        /// <summary>
+        /// The mod tweet_ load.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void ModTweetLoad(object sender, EventArgs e)
+        {
+            this.Width = this.Parent.Width - 26;
         }
 
         #endregion
