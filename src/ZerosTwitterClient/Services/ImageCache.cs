@@ -20,17 +20,19 @@
 //   The image cache.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace ZerosTwitterClient
+namespace ZerosTwitterClient.Services
 {
     using System;
     using System.Collections.Generic;
     using System.Drawing;
     using System.Net;
 
+    using ZerosTwitterClient.Services.Interfaces;
+
     /// <summary>
     /// The image cache.
     /// </summary>
-    internal class ImageCache
+    internal class ImageCache : IImageCache
     {
         #region Static Fields
 

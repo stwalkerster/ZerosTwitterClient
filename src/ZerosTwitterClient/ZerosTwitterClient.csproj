@@ -27,7 +27,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -66,17 +65,18 @@
     <Compile Include="DisplayedTweet.Designer.cs">
       <DependentUpon>DisplayedTweet.cs</DependentUpon>
     </Compile>
-    <Compile Include="DisplayForm.cs">
+    <Compile Include="Forms\DisplayForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DisplayForm.Designer.cs">
+    <Compile Include="Forms\DisplayForm.Designer.cs">
       <DependentUpon>DisplayForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ImageCache.cs" />
-    <Compile Include="ModerationForm.cs">
+    <Compile Include="Services\Interfaces\IImageCache.cs" />
+    <Compile Include="Services\ImageCache.cs" />
+    <Compile Include="Forms\ModerationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ModerationForm.Designer.cs">
+    <Compile Include="Forms\ModerationForm.Designer.cs">
       <DependentUpon>ModerationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ModTweet.cs">
@@ -98,10 +98,10 @@
     <EmbeddedResource Include="DisplayedTweet.resx">
       <DependentUpon>DisplayedTweet.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DisplayForm.resx">
+    <EmbeddedResource Include="Forms\DisplayForm.resx">
       <DependentUpon>DisplayForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ModerationForm.resx">
+    <EmbeddedResource Include="Forms\ModerationForm.resx">
       <DependentUpon>ModerationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ModTweet.resx">
@@ -150,7 +150,6 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-
   <Target Name="AfterBuild" Condition="'$(RunStyleCop)' == 'true'">
     <Message Text="$(MSBuildExtensionsPath)" />
     <StyleCopTask ProjectFullPath="$(MSBuildProjectDirectory)" SourceFiles="@(Compile)" ForceFullAnalysis="true" TreatErrorsAsWarnings="true" OutputFile="StyleCopViolations.xml" MaxViolationCount="0">

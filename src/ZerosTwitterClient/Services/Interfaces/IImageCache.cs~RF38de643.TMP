@@ -1,0 +1,29 @@
+﻿namespace ZerosTwitterClient
+{
+    using System.Drawing;
+
+    internal interface IImageCache
+    {
+        /// <summary>
+        /// The fetch.
+        /// </summary>
+        /// <param name="url">
+        /// The url.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Image"/>.
+        /// </returns>
+        Image Fetch(string url);
+
+        /// <summary>
+        /// The has image.
+        /// </summary>
+        /// <param name="url">
+        /// The url.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
+        bool HasImage(string url);
+    }
+}

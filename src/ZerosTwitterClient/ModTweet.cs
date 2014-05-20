@@ -26,6 +26,8 @@ namespace ZerosTwitterClient
     using System;
     using System.Windows.Forms;
 
+    using ZerosTwitterClient.Services;
+
     /// <summary>
     /// The mod tweet.
     /// </summary>

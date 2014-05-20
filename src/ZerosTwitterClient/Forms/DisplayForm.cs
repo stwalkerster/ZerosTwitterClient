@@ -21,7 +21,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ZerosTwitterClient
+namespace ZerosTwitterClient.Forms
 {
     using System.Drawing;
     using System.Windows.Forms;

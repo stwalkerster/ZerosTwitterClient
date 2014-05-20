@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Program.cs" company="Simon Walker">
+// <copyright file="IImageCache.cs" company="Simon Walker">
 //   Copyright (C) 2014 Simon Walker
 //   
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -17,67 +17,42 @@
 //   SOFTWARE.
 // </copyright>
 // <summary>
-//   The program.
+//   The ImageCache interface.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ZerosTwitterClient
+namespace ZerosTwitterClient.Services.Interfaces
 {
-    using System;
-    using System.Windows.Forms;
-
-    using Castle.MicroKernel.Registration;
-    using Castle.Windsor;
-
-    using ZerosTwitterClient.Forms;
+    using System.Drawing;
 
     /// <summary>
-    /// The program.
+    /// The ImageCache interface.
     /// </summary>
-    internal static class Program
+    internal interface IImageCache
     {
-        #region Static Fields
+        #region Public Methods and Operators
 
         /// <summary>
-        /// The moderation form.
+        /// The fetch.
         /// </summary>
-        private static ModerationForm moderationForm;
+        /// <param name="url">
+        /// The url.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Image"/>.
+        /// </returns>
+        Image Fetch(string url);
 
         /// <summary>
-        /// Gets the moderation form.
+        /// The has image.
         /// </summary>
-        public static ModerationForm ModerationForm
-        {
-            get
-            {
-                return moderationForm;
-            }
-        }
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        private static void Main()
-        {
-            var container = new WindsorContainer();
-            container.Register(
-                Classes.FromThisAssembly().InNamespace("ZerosTwitterClient.Services").WithService.AllInterfaces(),
-                Component.For<DisplayForm>(),
-                Component.For<ModerationForm>());
-
-
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-
-
-            moderationForm = container.Resolve<ModerationForm>();
-            Application.Run(moderationForm);
-        }
+        /// <param name="url">
+        /// The url.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
+        bool HasImage(string url);
 
         #endregion
     }

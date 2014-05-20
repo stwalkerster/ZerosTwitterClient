@@ -25,6 +25,8 @@ namespace ZerosTwitterClient
 {
     using System.Windows.Forms;
 
+    using ZerosTwitterClient.Services;
+
     /// <summary>
     /// The tweet display.
     /// </summary>

@@ -3,6 +3,8 @@ using System.Windows.Forms;
 
 namespace ZerosTwitterClient
 {
+    using ZerosTwitterClient.Services;
+
     public partial class DisplayedTweet : UserControl
     {
         private readonly Tweet _t;
