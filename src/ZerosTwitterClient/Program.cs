@@ -29,7 +29,9 @@ namespace ZerosTwitterClient
     using Castle.MicroKernel.Registration;
     using Castle.Windsor;
 
+    using Tweetinvi;
     using Tweetinvi.Core.Interfaces.oAuth;
+    using Tweetinvi.WebLogic;
 
     using ZerosTwitterClient.Forms;
     using ZerosTwitterClient.Services;
@@ -54,8 +56,11 @@ namespace ZerosTwitterClient
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+        /// <param name="parameters">
+        /// The credentials.
+        /// </param>
         [STAThread]
-        private static void Main()
+        private static void Main(string[] parameters)
         {
             var container = new WindsorContainer();
             container.Register(
@@ -68,7 +73,23 @@ namespace ZerosTwitterClient
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            IOAuthCredentials credentials = container.Resolve<TwitterLogin>().DisplayLogin();
+
+            IOAuthCredentials credentials = null;
+
+            if (parameters.Length == 4)
+            {
+                credentials = new OAuthCredentials
+                                  {
+                                      ConsumerKey = parameters[0],
+                                      ConsumerSecret = parameters[1],
+                                      AccessToken = parameters[2],
+                                      AccessTokenSecret = parameters[3]
+                                  };
+            }
+            else
+            {
+                credentials = container.Resolve<TwitterLogin>().DisplayLogin();
+            }
 
             if (credentials == null)
             {
@@ -76,6 +97,8 @@ namespace ZerosTwitterClient
             }
 
             container.Register(Component.For<IOAuthCredentials>().Instance(credentials));
+
+            TwitterCredentials.SetCredentials(credentials);
 
             ModerationForm = container.Resolve<ModerationForm>();
             Application.Run(ModerationForm);
