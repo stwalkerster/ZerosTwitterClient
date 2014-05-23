@@ -25,6 +25,7 @@ namespace ZerosTwitterClient.Forms
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Linq;
     using System.Windows.Forms;
 
     using ZerosTwitterClient.Properties;
@@ -135,7 +136,7 @@ namespace ZerosTwitterClient.Forms
         {
             try
             {
-                LinkedList<Tweet> newTweets = this.twitterGrabber.GetTweets(Settings.Default.TwitterSearchTerm);
+                IEnumerable<Tweet> newTweets = this.twitterGrabber.GetTweets(Settings.Default.TwitterSearchTerm).ToList();
                 foreach (var t in newTweets)
                 {
                     if (ActiveTweets.Contains(t.Id))
@@ -150,7 +151,7 @@ namespace ZerosTwitterClient.Forms
                     this.AddTweetToModPanelAsync(td);
                 }
 
-                this.toolStripStatusLabel1.Text = Resources.Done + string.Format("{0} tweets fetched.", newTweets.Count);
+                this.toolStripStatusLabel1.Text = Resources.Done + string.Format("{0} tweets fetched.", newTweets.Count());
             }
             catch (Exception ex)
             {

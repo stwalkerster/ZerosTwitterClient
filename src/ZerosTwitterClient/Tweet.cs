@@ -23,6 +23,9 @@
 namespace ZerosTwitterClient
 {
     using System.Drawing;
+    using System.Globalization;
+
+    using Tweetinvi.Core.Interfaces;
 
     using ZerosTwitterClient.Services.Interfaces;
 
@@ -51,6 +54,15 @@ namespace ZerosTwitterClient
         public Tweet(IImageCache imageCache)
         {
             this.imageCache = imageCache;
+        }
+
+        public Tweet(ITweet tweetinviTweet)
+        {
+            this.Author = tweetinviTweet.Creator.Name;
+            this.Timestamp = tweetinviTweet.CreatedAt.ToString(CultureInfo.InvariantCulture);
+            this.Content = tweetinviTweet.Text;
+            this.Id = (ulong)tweetinviTweet.Id;
+            this.ImageUrl = tweetinviTweet.Creator.ProfileImageUrl;
         }
 
         #endregion
@@ -94,5 +106,7 @@ namespace ZerosTwitterClient
         public string Timestamp { get; set; }
 
         #endregion
+
+        
     }
 }

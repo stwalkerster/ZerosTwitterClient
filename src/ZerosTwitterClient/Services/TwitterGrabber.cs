@@ -83,7 +83,7 @@ namespace ZerosTwitterClient.Services
         /// <returns>
         /// The <see cref="LinkedList{Tweet}"/>.
         /// </returns>
-        public LinkedList<Tweet> GetTweets(string search)
+        public IEnumerable<Tweet> GetTweets(string search)
         {
             var tweets = new LinkedList<Tweet>();
 

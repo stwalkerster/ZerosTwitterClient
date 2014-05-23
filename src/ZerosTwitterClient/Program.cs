@@ -43,20 +43,9 @@ namespace ZerosTwitterClient
         #region Static Fields
 
         /// <summary>
-        /// The moderation form.
-        /// </summary>
-        private static ModerationForm moderationForm;
-
-        /// <summary>
         /// Gets the moderation form.
         /// </summary>
-        public static ModerationForm ModerationForm
-        {
-            get
-            {
-                return moderationForm;
-            }
-        }
+        public static ModerationForm ModerationForm { get; private set; }
 
         #endregion
 
@@ -71,7 +60,7 @@ namespace ZerosTwitterClient
             var container = new WindsorContainer();
             container.Register(
                 Component.For<IImageCache>().ImplementedBy<ImageCache>(),
-                Component.For<ITwitterGrabber>().ImplementedBy<TwitterGrabber>(),
+                Component.For<ITwitterGrabber>().ImplementedBy<TweetinviGrabber>(),
                 Component.For<DisplayForm>(),
                 Component.For<TwitterLogin>(),
                 Component.For<ModerationForm>());
@@ -82,8 +71,8 @@ namespace ZerosTwitterClient
             IOAuthCredentials credentials = container.Resolve<TwitterLogin>().DisplayLogin();
             container.Register(Component.For<IOAuthCredentials>().Instance(credentials));
 
-            moderationForm = container.Resolve<ModerationForm>();
-            Application.Run(moderationForm);
+            ModerationForm = container.Resolve<ModerationForm>();
+            Application.Run(ModerationForm);
         }
 
         #endregion

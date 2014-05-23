@@ -20,7 +20,7 @@
 //   The twitter login.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace ZerosTwitterClient
+namespace ZerosTwitterClient.Forms
 {
     using System;
     using System.Diagnostics;

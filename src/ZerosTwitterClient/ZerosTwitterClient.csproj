@@ -132,6 +132,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Interfaces\TweetinviGrabber.cs" />
     <Compile Include="Tweet.cs" />
     <Compile Include="TweetDisplay.cs">
       <SubType>UserControl</SubType>
@@ -140,10 +141,10 @@
       <DependentUpon>TweetDisplay.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\TwitterGrabber.cs" />
-    <Compile Include="TwitterLogin.cs">
+    <Compile Include="Forms\TwitterLogin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TwitterLogin.Designer.cs">
+    <Compile Include="Forms\TwitterLogin.Designer.cs">
       <DependentUpon>TwitterLogin.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="DisplayedTweet.resx">
@@ -171,7 +172,7 @@
     <EmbeddedResource Include="TweetDisplay.resx">
       <DependentUpon>TweetDisplay.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TwitterLogin.resx">
+    <EmbeddedResource Include="Forms\TwitterLogin.resx">
       <DependentUpon>TwitterLogin.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />

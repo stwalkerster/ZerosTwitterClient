@@ -1,5 +1,5 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ITwitterGrabber.cs" company="Simon Walker">
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="TweetinviGrabber.cs" company="Simon Walker">
 //   Copyright (C) 2014 Simon Walker
 //   
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -17,19 +17,33 @@
 //   SOFTWARE.
 // </copyright>
 // <summary>
-//   The TwitterGrabber interface.
+//   The tweetinvi grabber.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace ZerosTwitterClient.Services.Interfaces
 {
     using System.Collections.Generic;
+    using System.Linq;
+
+    using Tweetinvi;
+    using Tweetinvi.Core.Interfaces;
+
+    using Tweet = ZerosTwitterClient.Tweet;
 
     /// <summary>
-    /// The TwitterGrabber interface.
+    /// The Tweetinvi grabber.
     /// </summary>
-    public interface ITwitterGrabber
+    public class TweetinviGrabber : ITwitterGrabber
     {
+        #region Fields
+
+        /// <summary>
+        /// The latest id.
+        /// </summary>
+        private long latestId = 0;
+
+        #endregion
+
         #region Public Methods and Operators
 
         /// <summary>
@@ -39,9 +53,21 @@ namespace ZerosTwitterClient.Services.Interfaces
         /// The search.
         /// </param>
         /// <returns>
-        /// The <see cref="LinkedList{Tweet}"/>.
+        /// The <see cref="IEnumerable{Tweet}"/>.
         /// </returns>
-        IEnumerable<Tweet> GetTweets(string search);
+        public IEnumerable<Tweet> GetTweets(string search)
+        {
+            ITweetSearchParameters searchParameters = Search.GenerateSearchTweetParameter(search);
+            searchParameters.SinceId = this.latestId;
+
+            List<ITweet> searchTweets = Search.SearchTweets(searchParameters);
+
+            List<Tweet> returnedTweets = searchTweets.Select(x => new Tweet(x)).ToList();
+
+            this.latestId = (long)returnedTweets.Max(x => x.Id);
+
+            return returnedTweets;
+        }
 
         #endregion
     }
