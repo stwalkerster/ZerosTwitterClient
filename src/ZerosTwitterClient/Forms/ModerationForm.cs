@@ -28,8 +28,14 @@ namespace ZerosTwitterClient.Forms
     using System.Linq;
     using System.Windows.Forms;
 
+    using Tweetinvi;
+    using Tweetinvi.Core.Interfaces.oAuth;
+    using Tweetinvi.Core.Interfaces.Streaminvi;
+
     using ZerosTwitterClient.Properties;
     using ZerosTwitterClient.Services.Interfaces;
+
+    using Tweet = ZerosTwitterClient.Tweet;
 
     /// <summary>
     /// The moderation form.
@@ -57,6 +63,18 @@ namespace ZerosTwitterClient.Forms
         /// </summary>
         private readonly BackgroundWorker tweetGrabberThread;
 
+        /// <summary>
+        /// The image cache.
+        /// </summary>
+        private readonly IImageCache imageCache;
+
+        private readonly IOAuthCredentials credentials;
+
+        /// <summary>
+        /// The filtered stream.
+        /// </summary>
+        private IFilteredStream fs;
+
         #endregion
 
         #region Constructors and Destructors
@@ -70,9 +88,14 @@ namespace ZerosTwitterClient.Forms
         /// <param name="twitterGrabber">
         /// The twitter Grabber.
         /// </param>
-        public ModerationForm(DisplayForm display, ITwitterGrabber twitterGrabber)
+        /// <param name="imageCache">
+        /// The image Cache.
+        /// </param>
+        public ModerationForm(DisplayForm display, ITwitterGrabber twitterGrabber, IImageCache imageCache, IOAuthCredentials credentials)
         {
             this.twitterGrabber = twitterGrabber;
+            this.imageCache = imageCache;
+            this.credentials = credentials;
             this.Display = display;
 
             this.InitializeComponent();
@@ -139,24 +162,35 @@ namespace ZerosTwitterClient.Forms
                 IEnumerable<Tweet> newTweets = this.twitterGrabber.GetTweets(Settings.Default.TwitterSearchTerm).ToList();
                 foreach (var t in newTweets)
                 {
-                    if (ActiveTweets.Contains(t.Id))
-                    {
-                        continue;
-                    }
-
-                    ActiveTweets.Add(t.Id);
-
-                    var td = new ModTweet(t);
-
-                    this.AddTweetToModPanelAsync(td);
+                    this.ReceivedTweet(t);
                 }
 
-                this.toolStripStatusLabel1.Text = Resources.Done + string.Format("{0} tweets fetched.", newTweets.Count());
+                this.toolStripStatusLabel.Text = Resources.Done + string.Format("{0} tweets fetched.", newTweets.Count());
             }
             catch (Exception ex)
             {
-                this.toolStripStatusLabel1.Text = ex.Message;
+                this.toolStripStatusLabel.Text = ex.Message;
             }
+        }
+
+        /// <summary>
+        /// The received tweet.
+        /// </summary>
+        /// <param name="t">
+        /// The t.
+        /// </param>
+        private void ReceivedTweet(Tweet t)
+        {
+            if (ActiveTweets.Contains(t.Id))
+            {
+                return;
+            }
+
+            ActiveTweets.Add(t.Id);
+
+            var td = new ModTweet(t);
+
+            this.AddTweetToModPanelAsync(td);
         }
 
         /// <summary>
@@ -170,7 +204,51 @@ namespace ZerosTwitterClient.Forms
         /// </param>
         private void CheckBox1CheckedChanged(object sender, EventArgs e)
         {
-            this.timer1.Enabled = this.checkBox1.Checked;
+            this.twitterSearchTermBox.Enabled = !this.streamEnabledCheckbox.Checked;
+
+            if (this.streamEnabledCheckbox.Checked)
+            {
+                TwitterCredentials.SetCredentials(this.credentials);
+
+                var fs = Stream.CreateTrackedStream();
+                
+               
+            //    this.fs.AddTrack(this.twitterSearchTermBox.Text);
+                fs.MatchingTweetReceived += this.FsMatchingTweetReceived;
+               // fs.TweetReceived += fs_TweetReceived;
+                fs.StreamStopped += fs_StreamStopped;
+
+              //  fs.StartStreamMatchingAnyCondition();
+                fs.StartStream();
+            }
+            else
+            {
+                this.fs.StopStream();
+            }
+        }
+
+        void fs_TweetReceived(object sender, Tweetinvi.Core.Events.EventArguments.TweetReceivedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        void fs_StreamStopped(object sender, Tweetinvi.Core.Events.EventArguments.StreamExceptionEventArgs e)
+        {
+           
+        }
+
+        /// <summary>
+        /// The fs matching tweet received.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void FsMatchingTweetReceived(object sender, Tweetinvi.Core.Events.EventArguments.MatchedTweetReceivedEventArgs e)
+        {
+            this.ReceivedTweet(new Tweet(e.Tweet, this.imageCache));
         }
 
         /// <summary>
@@ -249,7 +327,7 @@ namespace ZerosTwitterClient.Forms
 
             this.tweetGrabberThread.RunWorkerAsync();
             this.getMoreTweetsToolStripMenuItem.Enabled = false;
-            this.toolStripStatusLabel1.Text = Resources.GettingTweets;
+            this.toolStripStatusLabel.Text = Resources.GettingTweets;
         }
 
         /// <summary>
@@ -265,20 +343,6 @@ namespace ZerosTwitterClient.Forms
         {
             this.flowLayoutPanel1.Tag = this;
             this.Display.Show();
-        }
-
-        /// <summary>
-        /// The numeric up down 1_ value changed.
-        /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The e.
-        /// </param>
-        private void NumericUpDown1ValueChanged(object sender, EventArgs e)
-        {
-            this.timer1.Interval = (int)(this.numericUpDown1.Value * 1000);
         }
 
         /// <summary>

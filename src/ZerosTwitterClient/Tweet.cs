@@ -56,8 +56,18 @@ namespace ZerosTwitterClient
             this.imageCache = imageCache;
         }
 
-        public Tweet(ITweet tweetinviTweet)
+        /// <summary>
+        /// Initialises a new instance of the <see cref="Tweet"/> class.
+        /// </summary>
+        /// <param name="tweetinviTweet">
+        /// The tweetinvi tweet.
+        /// </param>
+        /// <param name="imageCache">
+        /// The image cache.
+        /// </param>
+        public Tweet(ITweet tweetinviTweet, IImageCache imageCache)
         {
+            this.imageCache = imageCache;
             this.Author = tweetinviTweet.Creator.Name;
             this.Timestamp = tweetinviTweet.CreatedAt.ToString(CultureInfo.InvariantCulture);
             this.Content = tweetinviTweet.Text;

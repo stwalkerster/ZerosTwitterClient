@@ -27,6 +27,7 @@ namespace ZerosTwitterClient.Services.Interfaces
 
     using Tweetinvi;
     using Tweetinvi.Core.Interfaces;
+    using Tweetinvi.Json;
 
     using Tweet = ZerosTwitterClient.Tweet;
 
@@ -59,14 +60,17 @@ namespace ZerosTwitterClient.Services.Interfaces
         {
             ITweetSearchParameters searchParameters = Search.GenerateSearchTweetParameter(search);
             searchParameters.SinceId = this.latestId;
+            
+            IEnumerable<string> enumerable = SearchJson.SearchTweets(searchParameters);
 
-            List<ITweet> searchTweets = Search.SearchTweets(searchParameters);
+            return null;
+            //List<ITweet> searchTweets = Search.SearchTweets(searchParameters);
 
-            List<Tweet> returnedTweets = searchTweets.Select(x => new Tweet(x)).ToList();
+            //List<Tweet> returnedTweets = searchTweets.Select(x => new Tweet(x)).ToList();
 
-            this.latestId = (long)returnedTweets.Max(x => x.Id);
+            //this.latestId = (long)returnedTweets.Max(x => x.Id);
 
-            return returnedTweets;
+            //return returnedTweets;
         }
 
         #endregion
