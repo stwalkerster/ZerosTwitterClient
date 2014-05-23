@@ -20,7 +20,6 @@
 //   The program.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace ZerosTwitterClient
 {
     using System;
@@ -29,9 +28,7 @@ namespace ZerosTwitterClient
     using Castle.MicroKernel.Registration;
     using Castle.Windsor;
 
-    using Tweetinvi;
-    using Tweetinvi.Core.Interfaces.oAuth;
-    using Tweetinvi.WebLogic;
+    using LinqToTwitter;
 
     using ZerosTwitterClient.Forms;
     using ZerosTwitterClient.Services;
@@ -42,7 +39,7 @@ namespace ZerosTwitterClient
     /// </summary>
     internal static class Program
     {
-        #region Static Fields
+        #region Public Properties
 
         /// <summary>
         /// Gets the moderation form.
@@ -64,41 +61,38 @@ namespace ZerosTwitterClient
         {
             var container = new WindsorContainer();
             container.Register(
-                Component.For<IImageCache>().ImplementedBy<ImageCache>(),
-                Component.For<ITwitterGrabber>().ImplementedBy<TweetinviGrabber>(),
-                Component.For<DisplayForm>(),
-                Component.For<TwitterLogin>(),
+                Component.For<IImageCache>().ImplementedBy<ImageCache>(), 
+                Component.For<ITwitterGrabber>().ImplementedBy<TwitterGrabber>(), 
+                Component.For<DisplayForm>(), 
                 Component.For<ModerationForm>());
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-
-            IOAuthCredentials credentials = null;
-
-            if (parameters.Length == 4)
-            {
-                credentials = new OAuthCredentials
-                                  {
-                                      ConsumerKey = parameters[0],
-                                      ConsumerSecret = parameters[1],
-                                      AccessToken = parameters[2],
-                                      AccessTokenSecret = parameters[3]
-                                  };
-            }
-            else
-            {
-                credentials = container.Resolve<TwitterLogin>().DisplayLogin();
-            }
-
-            if (credentials == null)
+            if (parameters.Length != 4)
             {
                 return;
             }
 
-            container.Register(Component.For<IOAuthCredentials>().Instance(credentials));
+            var sua = new SingleUserAuthorizer
+                          {
+                              CredentialStore =
+                                  new SingleUserInMemoryCredentialStore
+                                      {
+                                          ConsumerKey =
+                                              parameters[0],
+                                          ConsumerSecret =
+                                              parameters[1],
+                                          AccessToken =
+                                              parameters[2],
+                                          AccessTokenSecret =
+                                              parameters[3]
+                                      }
+                          };
 
-            TwitterCredentials.SetCredentials(credentials);
+            var context = new TwitterContext(sua);
+
+            container.Register(Component.For<TwitterContext>().Instance(context));
 
             ModerationForm = container.Resolve<ModerationForm>();
             Application.Run(ModerationForm);

@@ -23,9 +23,6 @@
 namespace ZerosTwitterClient
 {
     using System.Drawing;
-    using System.Globalization;
-
-    using Tweetinvi.Core.Interfaces;
 
     using ZerosTwitterClient.Services.Interfaces;
 
@@ -54,25 +51,6 @@ namespace ZerosTwitterClient
         public Tweet(IImageCache imageCache)
         {
             this.imageCache = imageCache;
-        }
-
-        /// <summary>
-        /// Initialises a new instance of the <see cref="Tweet"/> class.
-        /// </summary>
-        /// <param name="tweetinviTweet">
-        /// The tweetinvi tweet.
-        /// </param>
-        /// <param name="imageCache">
-        /// The image cache.
-        /// </param>
-        public Tweet(ITweet tweetinviTweet, IImageCache imageCache)
-        {
-            this.imageCache = imageCache;
-            this.Author = tweetinviTweet.Creator.Name;
-            this.Timestamp = tweetinviTweet.CreatedAt.ToString(CultureInfo.InvariantCulture);
-            this.Content = tweetinviTweet.Text;
-            this.Id = (ulong)tweetinviTweet.Id;
-            this.ImageUrl = tweetinviTweet.Creator.ProfileImageUrl;
         }
 
         #endregion

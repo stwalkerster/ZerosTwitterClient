@@ -25,16 +25,17 @@ namespace ZerosTwitterClient.Forms
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.IO;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Windows.Forms;
 
-    using Tweetinvi;
-    using Tweetinvi.Core.Interfaces.oAuth;
-    using Tweetinvi.Core.Interfaces.Streaminvi;
+    using LinqToTwitter;
 
     using ZerosTwitterClient.Properties;
     using ZerosTwitterClient.Services.Interfaces;
 
+    using Settings = ZerosTwitterClient.Properties.Settings;
     using Tweet = ZerosTwitterClient.Tweet;
 
     /// <summary>
@@ -68,12 +69,11 @@ namespace ZerosTwitterClient.Forms
         /// </summary>
         private readonly IImageCache imageCache;
 
-        private readonly IOAuthCredentials credentials;
-
         /// <summary>
-        /// The filtered stream.
+        /// The context.
         /// </summary>
-        private IFilteredStream fs;
+        private readonly TwitterContext context;
+
 
         #endregion
 
@@ -91,11 +91,11 @@ namespace ZerosTwitterClient.Forms
         /// <param name="imageCache">
         /// The image Cache.
         /// </param>
-        public ModerationForm(DisplayForm display, ITwitterGrabber twitterGrabber, IImageCache imageCache, IOAuthCredentials credentials)
+        public ModerationForm(DisplayForm display, ITwitterGrabber twitterGrabber, IImageCache imageCache, TwitterContext context)
         {
             this.twitterGrabber = twitterGrabber;
             this.imageCache = imageCache;
-            this.credentials = credentials;
+            this.context = context;
             this.Display = display;
 
             this.InitializeComponent();
@@ -208,48 +208,34 @@ namespace ZerosTwitterClient.Forms
 
             if (this.streamEnabledCheckbox.Checked)
             {
-                TwitterCredentials.SetCredentials(this.credentials);
-
-                var fs = Stream.CreateTrackedStream();
                 
-               
-            //    this.fs.AddTrack(this.twitterSearchTermBox.Text);
-                fs.MatchingTweetReceived += this.FsMatchingTweetReceived;
-               // fs.TweetReceived += fs_TweetReceived;
-                fs.StreamStopped += fs_StreamStopped;
 
-              //  fs.StartStreamMatchingAnyCondition();
-                fs.StartStream();
+                 var stream = from strm in this.context.Streaming
+                         where strm.Type == StreamingType.Filter && strm.Track == "#Vote2014"
+                         select strm;
+                stream.StartAsync(this.StreamParser);
             }
-            else
-            {
-                this.fs.StopStream();
-            }
-        }
-
-        void fs_TweetReceived(object sender, Tweetinvi.Core.Events.EventArguments.TweetReceivedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        void fs_StreamStopped(object sender, Tweetinvi.Core.Events.EventArguments.StreamExceptionEventArgs e)
-        {
-           
         }
 
         /// <summary>
-        /// The fs matching tweet received.
+        /// The stream parser.
         /// </summary>
-        /// <param name="sender">
-        /// The sender.
+        /// <param name="streamContent">
+        /// The stream content.
         /// </param>
-        /// <param name="e">
-        /// The e.
-        /// </param>
-        private void FsMatchingTweetReceived(object sender, Tweetinvi.Core.Events.EventArguments.MatchedTweetReceivedEventArgs e)
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        private async Task StreamParser(StreamContent streamContent)
         {
-            this.ReceivedTweet(new Tweet(e.Tweet, this.imageCache));
+            if (!this.streamEnabledCheckbox.Checked)
+            {
+                streamContent.CloseStream();
+            }
+
+            return;
         }
+
 
         /// <summary>
         /// The display full-screen tool strip menu item_ click.
