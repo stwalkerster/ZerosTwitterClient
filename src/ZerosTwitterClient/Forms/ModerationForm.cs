@@ -204,38 +204,8 @@ namespace ZerosTwitterClient.Forms
         /// </param>
         private void CheckBox1CheckedChanged(object sender, EventArgs e)
         {
-            this.twitterSearchTermBox.Enabled = !this.streamEnabledCheckbox.Checked;
-
-            if (this.streamEnabledCheckbox.Checked)
-            {
-                
-
-                 var stream = from strm in this.context.Streaming
-                         where strm.Type == StreamingType.Filter && strm.Track == "#Vote2014"
-                         select strm;
-                stream.StartAsync(this.StreamParser);
-            }
+            timer1.Enabled = streamEnabledCheckbox.Checked;
         }
-
-        /// <summary>
-        /// The stream parser.
-        /// </summary>
-        /// <param name="streamContent">
-        /// The stream content.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/>.
-        /// </returns>
-        private async Task StreamParser(StreamContent streamContent)
-        {
-            if (!this.streamEnabledCheckbox.Checked)
-            {
-                streamContent.CloseStream();
-            }
-
-            return;
-        }
-
 
         /// <summary>
         /// The display full-screen tool strip menu item_ click.

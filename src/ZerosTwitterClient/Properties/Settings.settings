@@ -2,11 +2,11 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ZerosTwitterClient.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="TwitterSearchTerm" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#hwunion</Value>
-    </Setting>
     <Setting Name="TwitterUpdateInterval" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">15</Value>
+    </Setting>
+    <Setting Name="TwitterSearchTerm" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#Vote2014</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -62,7 +62,7 @@ namespace ZerosTwitterClient
             var container = new WindsorContainer();
             container.Register(
                 Component.For<IImageCache>().ImplementedBy<ImageCache>(), 
-                Component.For<ITwitterGrabber>().ImplementedBy<TwitterGrabber>(), 
+                Component.For<ITwitterGrabber>().ImplementedBy<L2TGrabber>(), 
                 Component.For<DisplayForm>(), 
                 Component.For<ModerationForm>());
 

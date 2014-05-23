@@ -25,18 +25,6 @@ namespace ZerosTwitterClient.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#hwunion")]
-        public string TwitterSearchTerm {
-            get {
-                return ((string)(this["TwitterSearchTerm"]));
-            }
-            set {
-                this["TwitterSearchTerm"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("15")]
         public decimal TwitterUpdateInterval {
             get {
@@ -44,6 +32,18 @@ namespace ZerosTwitterClient.Properties {
             }
             set {
                 this["TwitterUpdateInterval"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#Vote2014")]
+        public string TwitterSearchTerm {
+            get {
+                return ((string)(this["TwitterSearchTerm"]));
+            }
+            set {
+                this["TwitterSearchTerm"] = value;
             }
         }
     }

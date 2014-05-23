@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\L2TGrabber.cs" />
     <Compile Include="Tweet.cs" />
     <Compile Include="TweetDisplay.cs">
       <SubType>UserControl</SubType>
