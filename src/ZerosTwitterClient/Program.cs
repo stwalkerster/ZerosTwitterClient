@@ -69,6 +69,12 @@ namespace ZerosTwitterClient
             Application.SetCompatibleTextRenderingDefault(false);
 
             IOAuthCredentials credentials = container.Resolve<TwitterLogin>().DisplayLogin();
+
+            if (credentials == null)
+            {
+                return;
+            }
+
             container.Register(Component.For<IOAuthCredentials>().Instance(credentials));
 
             ModerationForm = container.Resolve<ModerationForm>();
