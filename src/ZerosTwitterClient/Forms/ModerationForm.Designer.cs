@@ -40,7 +40,6 @@ namespace ZerosTwitterClient.Forms
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
-            this.twitterSearchTermBox = new System.Windows.Forms.TextBox();
             this.streamEnabledCheckbox = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -49,6 +48,7 @@ namespace ZerosTwitterClient.Forms
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.twitterSearchTermBox = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -168,24 +168,14 @@ namespace ZerosTwitterClient.Forms
             this.label1.Text = "Search term";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // twitterSearchTermBox
-            // 
-            this.twitterSearchTermBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::ZerosTwitterClient.Properties.Settings.Default, "TwitterSearchTerm", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.twitterSearchTermBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.twitterSearchTermBox.Location = new System.Drawing.Point(80, 3);
-            this.twitterSearchTermBox.Name = "twitterSearchTermBox";
-            this.twitterSearchTermBox.Size = new System.Drawing.Size(290, 20);
-            this.twitterSearchTermBox.TabIndex = 1;
-            this.twitterSearchTermBox.Text = global::ZerosTwitterClient.Properties.Settings.Default.TwitterSearchTerm;
-            // 
             // streamEnabledCheckbox
             // 
             this.streamEnabledCheckbox.AutoSize = true;
             this.streamEnabledCheckbox.Location = new System.Drawing.Point(80, 29);
             this.streamEnabledCheckbox.Name = "streamEnabledCheckbox";
-            this.streamEnabledCheckbox.Size = new System.Drawing.Size(148, 17);
+            this.streamEnabledCheckbox.Size = new System.Drawing.Size(143, 17);
             this.streamEnabledCheckbox.TabIndex = 5;
-            this.streamEnabledCheckbox.Text = "Enable streaming updates";
+            this.streamEnabledCheckbox.Text = "Enable automatic refresh";
             this.streamEnabledCheckbox.UseVisualStyleBackColor = true;
             this.streamEnabledCheckbox.CheckedChanged += new System.EventHandler(this.CheckBox1CheckedChanged);
             // 
@@ -252,6 +242,16 @@ namespace ZerosTwitterClient.Forms
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
             this.toolStripStatusLabel.Size = new System.Drawing.Size(0, 17);
             this.toolStripStatusLabel.Click += new System.EventHandler(this.ToolStripStatusLabel1Click);
+            // 
+            // twitterSearchTermBox
+            // 
+            this.twitterSearchTermBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::ZerosTwitterClient.Properties.Settings.Default, "TwitterSearchTerm", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.twitterSearchTermBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.twitterSearchTermBox.Location = new System.Drawing.Point(80, 3);
+            this.twitterSearchTermBox.Name = "twitterSearchTermBox";
+            this.twitterSearchTermBox.Size = new System.Drawing.Size(290, 20);
+            this.twitterSearchTermBox.TabIndex = 1;
+            this.twitterSearchTermBox.Text = global::ZerosTwitterClient.Properties.Settings.Default.TwitterSearchTerm;
             // 
             // ModerationForm
             // 
